@@ -1,0 +1,19 @@
+package pl.kedrabartosz.HomeBudget;
+
+import java.math.BigDecimal;
+import java.time.Instant;
+import java.util.List;
+
+public class ShoppingCart {
+    private Person person;
+    private List<Item> items;
+    private BigDecimal priceOfItems;
+    private Instant time;
+
+    public ShoppingCart(Person person, List<Item> items, BigDecimal priceOfItems, Instant time) {
+        this.person = person;
+        this.items = items;
+        this.priceOfItems = priceOfItems;
+        this.time = time;
+    }
+}
