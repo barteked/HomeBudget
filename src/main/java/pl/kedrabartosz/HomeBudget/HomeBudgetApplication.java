@@ -11,3 +11,7 @@ public class HomeBudgetApplication {
 	}
 
 }
+// dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobioone)
+// (nazwa jedzenia resturacja czy wyjscia na jedzenie) (zrobione)
+// , wstawic do gh, zapoznac sie z nowym wzorcem projektowym Repozytorium!
+//poczytac pdfa!!
