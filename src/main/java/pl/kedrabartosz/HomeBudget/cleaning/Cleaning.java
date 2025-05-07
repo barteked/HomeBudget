@@ -1,5 +1,7 @@
 package pl.kedrabartosz.HomeBudget.cleaning;
 
-public interface Cleaning {
+import pl.kedrabartosz.HomeBudget.Cost;
+
+public interface Cleaning extends Cost {
     public void clean();
 }

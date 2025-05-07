@@ -1,5 +1,7 @@
 package pl.kedrabartosz.HomeBudget.entertainment;
 
-public interface Entertainment {
+import pl.kedrabartosz.HomeBudget.Cost;
+
+public interface Entertainment extends Cost {
     public void entertain();
 }

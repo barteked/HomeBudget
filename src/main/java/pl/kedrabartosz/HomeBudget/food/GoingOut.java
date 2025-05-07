@@ -1,6 +1,6 @@
 package pl.kedrabartosz.HomeBudget.food;
 
-public class Exits implements Food{
+public class GoingOut implements Food{
     @Override
     public void food() {
 

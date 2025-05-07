@@ -1,5 +1,7 @@
 package pl.kedrabartosz.HomeBudget.development;
 
-public interface Development {
+import pl.kedrabartosz.HomeBudget.Cost;
+
+public interface Development extends Cost {
     public void develop();
 }
