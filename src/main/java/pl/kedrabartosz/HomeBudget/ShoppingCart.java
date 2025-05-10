@@ -6,7 +6,7 @@ import java.util.List;
 
 public class ShoppingCart {
     private Person person;
-    private List<Item> items;
+    private List<Cost> items;
     private BigDecimal priceOfItems;
     private Instant time;
 

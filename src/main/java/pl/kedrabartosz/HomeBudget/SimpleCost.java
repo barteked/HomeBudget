@@ -13,4 +13,13 @@ public class SimpleCost implements Cost {
     public String toString() {
         return description + ": " + amount + " zł";
     }
+    @Override
+    public double getPrice() {
+        return amount;
+    }
+
+    @Override
+    public Category getCategory() {
+        return null;
+    }
 }

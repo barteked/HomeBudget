@@ -11,7 +11,7 @@ public class CostService {
 
   private CostRepository listBasedRepository;
 
-  public CostService(@Autowired  CostRepository listBasedRepository) {
+  public CostService(@Autowired CostRepository listBasedRepository) {
     // = to przypisanie = to jest włąśnie wstrzykiwanie zależności
     this.listBasedRepository = listBasedRepository;
   }

@@ -1,6 +1,7 @@
 package pl.kedrabartosz.HomeBudget;
 
 import java.util.ArrayList;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -12,54 +13,52 @@ import pl.kedrabartosz.HomeBudget.service.CostService;
 @SpringBootApplication
 public class HomeBudgetApplication {
 
-<<<<<<< HEAD
+
     public static void main(String[] args) {
-        //SpringApplication.run(HomeBudgetApplication.class, args);
-        CostRepository costRepository = new ListBasedRepository();
-        costRepository.addCost();
-        System.out.println(costRepository.getAll());
-=======
-  public static void main(String[] args) {
-    // 1. new
-    CostRepository costRepository = new ListBasedRepository(new ArrayList<>());
-
-    // 2. builder
-    CostRepository costRepositoryBuilder = ListBasedRepository.builder().build();
-
-    // 3. Factory
-    CostRepository costRepositoryFactory = CostRepositoryFactory.createCostRepository();
+        // SpringApplication.run(HomeBudgetApplication.class, args);
+        // CostRepository costRepository = new ListBasedRepository();
+        //costRepository.addCost();
+        //System.out.println(costRepository.getAll());
 
 
-    // IoC - Inversion of Control, czyli nie my tworzymy obiekty tylko zlecamy to frameworkpwi
-    // i to on je stworzy i wstrzyknie (w konstruktorze/setterze) wtedy gdy będa potrzebne a nie na zaś
+        // 1. new
+        CostRepository costRepository = new ListBasedRepository(new ArrayList<>());
 
-    ConfigurableApplicationContext context = SpringApplication.run(HomeBudgetApplication.class, args);
-    for (String beanDefinitionName : context.getBeanDefinitionNames()) {
-      System.out.println(beanDefinitionName);
->>>>>>> 5e7de9252a05662e9469c305b5915a08616b2ce4
+        // 2. builder
+        CostRepository costRepositoryBuilder = ListBasedRepository.builder().build();
+
+        // 3. Factory
+        CostRepository costRepositoryFactory = CostRepositoryFactory.createCostRepository();
+
+
+        // IoC - Inversion of Control, czyli nie my tworzymy obiekty tylko zlecamy to frameworkpwi
+        // i to on je stworzy i wstrzyknie (w konstruktorze/setterze) wtedy gdy będa potrzebne a nie na zaś
+
+        ConfigurableApplicationContext context = SpringApplication.run(HomeBudgetApplication.class, args);
+        for (String beanDefinitionName : context.getBeanDefinitionNames()) {
+            System.out.println(beanDefinitionName);
+
+        }
+
+        // context - wór ze wszystkimi beanami, którymi ma Spring zarządzać
+        // aby móc korzystać z costServicu nie możemy go robić (new CostService())!!, tylko
+        // pozwalamy Springowi to zrobić i my chcemy tylko się dostać do tego beana, co on stworzył,
+        // i na nim operować (ale nie sami go tworzyć)
+        CostService costService = context.getBean(CostService.class);
+        Cost newCost = costService.saveCost("Jewelry", 250.00);
+        System.out.println(newCost);
+
+        // @Autowired, @Service, @Component, @Repository
+        // HW:  @RestController, @Bean, @Configuration,
+        // HW: Scope (czym jest), primary bean*, @Value / @Resource - wstrzykiwanie po NAZWIE, by name
+
+        // DI - Dependency Injection, wstrzykiwanie zależności (this.XXX = YYY), przypisane wartości do pola
+        // Guice,
+
+
+        costRepository.addCost("Pizza", 25.0);
+        costRepository.getAll();
     }
-
-    // context - wór ze wszystkimi beanami, którymi ma Spring zarządzać
-    // aby móc korzystać z costServicu nie możemy go robić (new CostService())!!, tylko
-    // pozwalamy Springowi to zrobić i my chcemy tylko się dostać do tego beana, co on stworzył,
-    // i na nim operować (ale nie sami go tworzyć)
-    CostService costService = context.getBean(CostService.class);
-    Cost newCost = costService.saveCost("Jewelry", 250.00);
-    System.out.println(newCost);
-
-    // @Autowired, @Service, @Component, @Repository
-    // HW:  @RestController, @Bean, @Configuration,
-    // HW: Scope (czym jest), primary bean*, @Value / @Resource - wstrzykiwanie po NAZWIE, by name
-
-    // DI - Dependency Injection, wstrzykiwanie zależności (this.XXX = YYY), przypisane wartości do pola
-     // Guice,
-
-
-
-
-    costRepository.addCost("Pizza", 25.0);
-    costRepository.getAll();
-  }
 
 }
 
