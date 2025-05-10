@@ -11,7 +11,7 @@ import pl.kedrabartosz.HomeBudget.repository.ListBasedRepository;
         //SpringApplication.run(HomeBudgetApplication.class, args);
         CostRepository costRepository = new ListBasedRepository();
         costRepository.addCost();
-        costRepository.getAll();
+        System.out.println(costRepository.getAll());
     }
 
 
