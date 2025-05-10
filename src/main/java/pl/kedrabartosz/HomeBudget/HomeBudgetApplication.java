@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import pl.kedrabartosz.HomeBudget.repository.CostRepository;
 import pl.kedrabartosz.HomeBudget.repository.CostRepositoryFactory;
-import pl.kedrabartosz.HomeBudget.repository.ListBasedRepository;
+import pl.kedrabartosz.HomeBudget.repository.ListBasedCostRepository;
 import pl.kedrabartosz.HomeBudget.service.CostService;
 
 @SpringBootApplication
@@ -22,10 +22,10 @@ public class HomeBudgetApplication {
 
 
         // 1. new
-        CostRepository costRepository = new ListBasedRepository(new ArrayList<>());
+        CostRepository costRepository = new ListBasedCostRepository(new ArrayList<>());
 
         // 2. builder
-        CostRepository costRepositoryBuilder = ListBasedRepository.builder().build();
+        CostRepository costRepositoryBuilder = ListBasedCostRepository.builder().build();
 
         // 3. Factory
         CostRepository costRepositoryFactory = CostRepositoryFactory.createCostRepository();

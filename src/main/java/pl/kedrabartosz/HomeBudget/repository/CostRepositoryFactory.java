@@ -8,6 +8,6 @@ public class CostRepositoryFactory {
   }
 
   public static CostRepository createCostRepository(){
-    return new ListBasedRepository(new ArrayList<>());
+    return new ListBasedCostRepository(new ArrayList<>());
   }
 }

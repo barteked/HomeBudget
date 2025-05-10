@@ -1,5 +1,10 @@
 package pl.kedrabartosz.HomeBudget;
 
-public class Category {
+import lombok.AllArgsConstructor;
+import lombok.Data;
 
+@Data
+@AllArgsConstructor
+public class Category {
+    private String name;
 }
