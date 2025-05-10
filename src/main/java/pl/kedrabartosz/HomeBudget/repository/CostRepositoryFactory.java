@@ -4,10 +4,10 @@ import java.util.ArrayList;
 
 public class CostRepositoryFactory {
 
-  private CostRepositoryFactory() {
-  }
+    private CostRepositoryFactory() {
+    }
 
-  public static CostRepository createCostRepository(){
-    return new ListBasedCostRepository(new ArrayList<>());
-  }
+    public static CostRepository createCostRepository() {
+        return new ListBasedCostRepository(new ArrayList<>());
+    }
 }
