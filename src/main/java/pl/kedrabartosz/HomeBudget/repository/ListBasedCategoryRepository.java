@@ -30,10 +30,11 @@ public class ListBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Category getCategory(String name) {
-        return categories.stream()
-                .filter(c -> c.getName().equalsIgnoreCase(name))
-                .findFirst()
-                .orElse(null);
+        return categories.stream()// tworzy strumien z listy category, jest to bezpieczniejsze! niz iterowanie po forze!
+                .filter(c -> c.getName().equalsIgnoreCase(name))// filtruje elementy spelniajace warunek,
+                // equalsIgnoreCase ignoruje czy to duza czy mala litera!, getname() to po prostu taka sama nazwa porownuje!
+                .findFirst()// zwraca pierwszy element pasujacy
+                .orElse(null); // jesli nic nie znaleziono zwraca null
     }
 
     @Override
