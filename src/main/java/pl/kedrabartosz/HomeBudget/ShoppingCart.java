@@ -10,7 +10,7 @@ public class ShoppingCart {
     private BigDecimal priceOfItems;
     private Instant time;
 
-    public ShoppingCart(Person person, List<Item> items, BigDecimal priceOfItems, Instant time) {
+    public ShoppingCart(Person person, List<Cost> items, BigDecimal priceOfItems, Instant time) {
         this.person = person;
         this.items = items;
         this.priceOfItems = priceOfItems;

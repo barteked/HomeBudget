@@ -5,9 +5,9 @@ import pl.kedrabartosz.HomeBudget.Cost;
 import java.util.List;
 
 public interface CostRepository {
-    public Cost addCost();
+  Cost addCost(String product, double price);
 
-    public Cost updateCost();
+  public Cost updateCost();
 
     public Cost getCost();
 
