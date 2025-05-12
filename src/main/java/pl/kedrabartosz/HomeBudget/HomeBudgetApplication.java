@@ -61,7 +61,6 @@ public class HomeBudgetApplication {
         costRepository.addCost("Pizza", 25.0);
         costRepository.getAll();
     }
-
 }
 
 // dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobioone)
