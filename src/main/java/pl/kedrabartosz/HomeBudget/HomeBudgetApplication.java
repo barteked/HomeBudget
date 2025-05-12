@@ -54,8 +54,10 @@ public class HomeBudgetApplication {
 
         // DI - Dependency Injection, wstrzykiwanie zależności (this.XXX = YYY), przypisane wartości do pola
         // Guice,
-
-
+        //@Primary - Służy do wskazania preferowanego beana w przypadku, gdy jest więcej niż jeden bean tego samego typu.
+        //@Value - Umożliwia wstrzykiwanie wartości (np. z plików konfiguracyjnych) do pól klasy.
+        // @Resource pochodzi od javy a @Autowired od springa
+        //Autowired wstrzykuje na podstawie typu a Resource na postawie nazwy
         costRepository.addCost("Pizza", 25.0);
         costRepository.getAll();
     }
