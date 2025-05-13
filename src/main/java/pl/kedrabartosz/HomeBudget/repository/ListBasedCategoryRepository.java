@@ -5,6 +5,7 @@ import lombok.Builder;
 import org.springframework.stereotype.Repository;
 import pl.kedrabartosz.HomeBudget.Category;
 
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +35,13 @@ public class ListBasedCategoryRepository implements CategoryRepository {
                 .filter(c -> c.getName().equalsIgnoreCase(name))// filtruje elementy spelniajace warunek,
                 // equalsIgnoreCase ignoruje czy to duza czy mala litera!, getname() to po prostu taka sama nazwa porownuje!
                 .findFirst()// zwraca pierwszy element pasujacy
-                .orElse(null); // jesli nic nie znaleziono zwraca null
+                .orElseThrow(() -> new IllegalArgumentException("Can't find Category with this name " + name));
+        //.orElse(Category.builder().build());
+        //.orElse(null); // jesli nic nie znaleziono zwraca null tak sie nie robi!! nie zwraaca sie nulli!
     }
 
+    // jak wyglada hierarchia wyjatkow
+    //czym sa pliki csv!
     @Override
     public Category deleteCategory(String name) {
         Category toRemove = getCategory(name);

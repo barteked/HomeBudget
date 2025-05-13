@@ -8,6 +8,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import pl.kedrabartosz.HomeBudget.repository.CostRepository;
 import pl.kedrabartosz.HomeBudget.repository.CostRepositoryFactory;
 import pl.kedrabartosz.HomeBudget.repository.ListBasedCostRepository;
+import pl.kedrabartosz.HomeBudget.service.CategoryService;
 import pl.kedrabartosz.HomeBudget.service.CostService;
 
 @SpringBootApplication
@@ -60,6 +61,12 @@ public class HomeBudgetApplication {
         //Autowired wstrzykuje na podstawie typu a Resource na postawie nazwy
         costRepository.addCost("Pizza", 25.0);
         costRepository.getAll();
+
+        CategoryService categoryService = context.getBean(CategoryService.class);
+        Category newCategory = categoryService.saveCategory("Category1");
+        Category newCategory2 = categoryService.getCategory("Category1");
+        System.out.println(newCategory);
+        System.out.println(newCategory2.getName());
     }
 }
 // dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobioone)
