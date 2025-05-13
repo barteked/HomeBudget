@@ -1,26 +1,44 @@
 package pl.kedrabartosz.HomeBudget;
 
 public class SimpleCost implements Cost {
-    private String description;
-    private double amount;
+    private String product;
+    private double price;
+    private Category category;
 
-    public SimpleCost(String description, double amount) {
-        this.description = description;
-        this.amount = amount;
+    public SimpleCost(String product, double price, Category category) {
+        this.product = product;
+        this.price = price;
+        this.category = category;
+    }
+
+    // Getter i setter dla product!!!!!
+    @Override
+    public String getProduct() {
+        return product;
     }
 
     @Override
-    public String toString() {
-        return description + ": " + amount + " zł";
+    public void setProduct(String product) {
+        this.product = product;
     }
 
     @Override
     public double getPrice() {
-        return amount;
+        return price;
     }
 
     @Override
     public Category getCategory() {
-        return null;
+        return category;
+    }
+
+    @Override
+    public void setPrice(double price) {
+
+    }
+
+    @Override
+    public String toString() {
+        return product + ": " + price + " zł, Category: " + category.getName();
     }
 }

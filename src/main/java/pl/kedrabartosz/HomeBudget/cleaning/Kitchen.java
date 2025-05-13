@@ -16,4 +16,23 @@ public class Kitchen implements Cleaning{
     public Category getCategory() {
         return null;
     }
+
+    public Kitchen() {
+        super();
+    }
+
+    @Override
+    public void setPrice(double price) {
+
+    }
+
+    @Override
+    public String getProduct() {
+        return "";
+    }
+
+    @Override
+    public void setProduct(String product) {
+
+    }
 }

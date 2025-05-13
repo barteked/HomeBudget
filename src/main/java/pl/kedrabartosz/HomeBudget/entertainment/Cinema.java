@@ -16,4 +16,19 @@ public class Cinema implements Entertainment{
     public Category getCategory() {
         return null;
     }
+
+    @Override
+    public void setPrice(double price) {
+
+    }
+
+    @Override
+    public String getProduct() {
+        return "";
+    }
+
+    @Override
+    public void setProduct(String product) {
+
+    }
 }

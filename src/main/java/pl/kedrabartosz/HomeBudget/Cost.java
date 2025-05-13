@@ -1,10 +1,14 @@
 package pl.kedrabartosz.HomeBudget;
 
-import pl.kedrabartosz.HomeBudget.repository.CostRepository;
-
 public interface Cost {
 
     public double getPrice();
 
     public Category getCategory();
+
+    public void setProduct(String product);
+
+    public String getProduct();
+
+    public void setPrice(double price);
 }
