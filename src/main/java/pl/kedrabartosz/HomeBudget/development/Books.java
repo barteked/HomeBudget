@@ -17,4 +17,19 @@ public class Books implements Development {
     public Category getCategory() {
         return null;
     }
+
+    @Override
+    public void setPrice(double price) {
+
+    }
+
+    @Override
+    public void setProduct(String product) {
+
+    }
+
+    @Override
+    public String getProduct() {
+        return "";
+    }
 }

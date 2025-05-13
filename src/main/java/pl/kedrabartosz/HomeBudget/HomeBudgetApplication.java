@@ -46,7 +46,7 @@ public class HomeBudgetApplication {
         // pozwalamy Springowi to zrobić i my chcemy tylko się dostać do tego beana, co on stworzył,
         // i na nim operować (ale nie sami go tworzyć)
         CostService costService = context.getBean(CostService.class);
-        Cost newCost = costService.saveCost("Jewelry", 250.00);
+        Cost newCost = costService.saveCost("Jewelry", 250.00, Category.builder().build());
         System.out.println(newCost);
 
         // @Autowired, @Service, @Component, @Repository
@@ -59,8 +59,6 @@ public class HomeBudgetApplication {
         //@Value - Umożliwia wstrzykiwanie wartości (np. z plików konfiguracyjnych) do pól klasy.
         // @Resource pochodzi od javy a @Autowired od springa
         //Autowired wstrzykuje na podstawie typu a Resource na postawie nazwy
-        costRepository.addCost("Pizza", 25.0);
-        costRepository.getAll();
 
         CategoryService categoryService = context.getBean(CategoryService.class);
         Category newCategory = categoryService.saveCategory("Category1");

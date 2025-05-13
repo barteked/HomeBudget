@@ -17,4 +17,19 @@ public class GroceryShopping implements Food{
     public Category getCategory() {
         return null;
     }
+
+    @Override
+    public String getProduct() {
+        return "";
+    }
+
+    @Override
+    public void setPrice(double price) {
+
+    }
+
+    @Override
+    public void setProduct(String product) {
+
+    }
 }

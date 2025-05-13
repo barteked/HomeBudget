@@ -17,4 +17,23 @@ public class Courses implements Development{
     public Category getCategory() {
         return null;
     }
+
+    public Courses() {
+        super();
+    }
+
+    @Override
+    public void setPrice(double price) {
+
+    }
+
+    @Override
+    public String getProduct() {
+        return "";
+    }
+
+    @Override
+    public void setProduct(String product) {
+
+    }
 }
