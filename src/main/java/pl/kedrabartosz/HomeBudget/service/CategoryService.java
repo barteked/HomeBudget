@@ -5,13 +5,15 @@ import org.springframework.stereotype.Service;
 import pl.kedrabartosz.HomeBudget.Category;
 import pl.kedrabartosz.HomeBudget.repository.CategoryRepository;
 
+import java.util.List;
+
 @Service
 //service sie dodaje dla springa! nie jest to koniecznie bez tego tez by smigalo :D!
 public class CategoryService {
 
     private CategoryRepository categoryRepository;
 
-    public CategoryService( @Autowired CategoryRepository categoryRepository) {
+    public CategoryService(@Autowired CategoryRepository categoryRepository) {
         // tu nastepuje wstrzykneicie zaleznosci!
         this.categoryRepository = categoryRepository;
     }
@@ -28,5 +30,12 @@ public class CategoryService {
         return categoryRepository.getCategory(name);
     }
 
+    public Category deleteCategory(String name) {
+        return categoryRepository.deleteCategory(name);
+    }
+
+    public List<Category> getAllCategories() {
+        return categoryRepository.getAll();
+    }
 
 }
