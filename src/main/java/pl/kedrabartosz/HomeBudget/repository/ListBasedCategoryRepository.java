@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class ListBasedCategoryRepository implements CategoryRepository {
-
+    private ListBasedCategoryRepository listBasedCategoryRepository;
     private List<Category> categories;
 
     @Override
@@ -25,8 +25,12 @@ public class ListBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Category update(String oldName, String newName) {
-        deleteCategory(oldName);
-        return save(newName);
+        Category existingCategory = listBasedCategoryRepository.getCategory(oldName);
+        if (existingCategory == null) {
+            throw new IllegalArgumentException("Category with name '" + oldName + "' not found.");
+        }
+        listBasedCategoryRepository.deleteCategory(oldName);
+        return listBasedCategoryRepository.save(newName);
     }
 
     @Override
@@ -45,6 +49,9 @@ public class ListBasedCategoryRepository implements CategoryRepository {
     @Override
     public Category deleteCategory(String name) {
         Category toRemove = getCategory(name);
+        if (toRemove == null) {
+            throw new IllegalArgumentException("Category with name '" + name + "' not found.");
+        }
         categories.remove(toRemove);
         return toRemove;
     }
