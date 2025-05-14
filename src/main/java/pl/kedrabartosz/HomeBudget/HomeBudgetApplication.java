@@ -47,7 +47,12 @@ public class HomeBudgetApplication {
         // i na nim operować (ale nie sami go tworzyć)
         CostService costService = context.getBean(CostService.class);
         Cost newCost = costService.saveCost("Jewelry", 250.00, Category.builder().build());
+        Cost newCost5 = costService.saveCost("Car",4000,Category.builder().build());
+        Cost newCost2 = costService.getCost("Jewelry");
         System.out.println(newCost);
+        System.out.println(newCost2.getPrice());
+        System.out.println(newCost5.getProduct());
+
 
         // @Autowired, @Service, @Component, @Repository
         // HW:  @RestController, @Bean, @Configuration,
@@ -63,8 +68,15 @@ public class HomeBudgetApplication {
         CategoryService categoryService = context.getBean(CategoryService.class);
         Category newCategory = categoryService.saveCategory("Category1");
         Category newCategory2 = categoryService.getCategory("Category1");
+        Category newCategory3 = categoryService.deleteCategory("Category1");
+        Category newCategory4 = categoryService.saveCategory("Category2");
         System.out.println(newCategory);
         System.out.println(newCategory2.getName());
+        System.out.println(newCategory.getName());
+        System.out.println(newCategory4.getName());
+
+
+
     }
 }
 // dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobioone)
