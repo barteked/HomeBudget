@@ -50,4 +50,5 @@ public class ListBasedCostRepository implements CostRepository {
     public List<Cost> getAll() {
         return new ArrayList<>(costs);
     }
+
 }
