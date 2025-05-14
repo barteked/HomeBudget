@@ -23,7 +23,13 @@ public class CategoryService {
     }
 
     public Category updateCategory(String oldName, String newName) {
-        return categoryRepository.update(oldName, newName);
+        try {
+            return categoryRepository.update(oldName, newName);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
+
     }
 
     public Category getCategory(String name) {
@@ -31,7 +37,12 @@ public class CategoryService {
     }
 
     public Category deleteCategory(String name) {
-        return categoryRepository.deleteCategory(name);
+        try {
+            return categoryRepository.deleteCategory(name);
+        } catch (IllegalArgumentException e) {
+            System.out.println("Error: " + e.getMessage());
+            return null;
+        }
     }
 
     public List<Category> getAllCategories() {
