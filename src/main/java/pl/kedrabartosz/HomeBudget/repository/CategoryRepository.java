@@ -1,5 +1,6 @@
 package pl.kedrabartosz.HomeBudget.repository;
 
+import java.util.Optional;
 import pl.kedrabartosz.HomeBudget.Category;
 
 import java.util.List;
@@ -7,11 +8,11 @@ import java.util.List;
 public interface CategoryRepository {
     Category save(String name);
 
-    Category update(String oldName, String newName);
+    Optional<Category> update(String oldName, String newName);
 
-    Category getCategory(String name);
+    Optional<Category> getCategory(String name);
 
-    Category deleteCategory(String name);
+    Optional<Category> deleteCategory(String name);
 
     List<Category> getAll();
 }
