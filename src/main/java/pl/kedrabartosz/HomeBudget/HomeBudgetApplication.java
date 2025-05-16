@@ -21,7 +21,6 @@ public class HomeBudgetApplication {
         //costRepository.addCost();
         //System.out.println(costRepository.getAll());
 
-
         // 1. new
         CostRepository costRepository = new ListBasedCostRepository(new ArrayList<>());
 
@@ -38,7 +37,6 @@ public class HomeBudgetApplication {
         ConfigurableApplicationContext context = SpringApplication.run(HomeBudgetApplication.class, args);
         for (String beanDefinitionName : context.getBeanDefinitionNames()) {
             System.out.println(beanDefinitionName);
-
         }
 
         // context - wór ze wszystkimi beanami, którymi ma Spring zarządzać
