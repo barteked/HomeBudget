@@ -26,6 +26,10 @@ public class ListBasedCategoryRepository implements CategoryRepository {
     @Override
     public Optional<Category> update(String oldName, String newName) {
         Optional<Category> existingCategoryOptional = this.getCategory(oldName);
+        existingCategoryOptional.ifPresent(category -> category.setName(newName));
+        return existingCategoryOptional;
+
+        /*
         if (existingCategoryOptional.isEmpty()){ // tu sprawdzasz, czu Optional nie jest pusty
             return Optional.empty();
         }
@@ -33,6 +37,7 @@ public class ListBasedCategoryRepository implements CategoryRepository {
         category.setName(newName); // tu updatujesz categorię
 //        new Optional() - zakazane, tworzymy optionale przez .of() lub .ofNullable()
         return Optional.of(category); // tu zwracasz wynik
+         */
     }
 
     @Override
