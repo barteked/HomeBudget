@@ -9,6 +9,7 @@ import pl.kedrabartosz.HomeBudget.SimpleCost;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 @AllArgsConstructor
@@ -24,26 +25,28 @@ public class ListBasedCostRepository implements CostRepository {
     }
 
     @Override
-    public Cost updateCost(String oldProduct, String newProduct, double newPrice) {
-        Cost costToUpdate = getCost(oldProduct);
-        costToUpdate.setProduct(newProduct);
-        costToUpdate.setPrice(newPrice);
-        return costToUpdate;
+    public Optional<Cost> updateCost(String oldProduct, String newProduct, double newPrice) {
+        Optional<Cost> existingCostOptional = this.getCost(oldProduct);
+        existingCostOptional.ifPresent(cost -> cost.setPrice(newPrice));
+        return existingCostOptional;
     }
 
     @Override
-    public Cost getCost(String product) {
+    public Optional<Cost> getCost(String product) {
         return costs.stream()
                 .filter(cost -> cost.getProduct().equalsIgnoreCase(product))
-                .findFirst()
-                .orElseThrow(() -> new IllegalArgumentException("Can't find Cost with this product: " + product));
+                .findFirst();
     }
 
     @Override
-    public Cost deleteCost(String product) {
-        Cost costToDelete = getCost(product);
-        costs.remove(costToDelete);
-        return costToDelete;
+    public Optional<Cost> deleteCost(String product) {
+        Optional<Cost> toRemoveOptional = getCost(product);
+        if (toRemoveOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        Cost toRemoveCost = toRemoveOptional.get();
+        costs.remove(toRemoveCost);
+        return Optional.of(toRemoveCost);
     }
 
     @Override
