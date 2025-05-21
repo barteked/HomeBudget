@@ -35,9 +35,6 @@ public class HomeBudgetApplication {
         // i to on je stworzy i wstrzyknie (w konstruktorze/setterze) wtedy gdy będa potrzebne a nie na zaś
 
         ConfigurableApplicationContext context = SpringApplication.run(HomeBudgetApplication.class, args);
-        for (String beanDefinitionName : context.getBeanDefinitionNames()) {
-            System.out.println(beanDefinitionName);
-        }
 
         // context - wór ze wszystkimi beanami, którymi ma Spring zarządzać
         // aby móc korzystać z costServicu nie możemy go robić (new CostService())!!, tylko
@@ -45,11 +42,21 @@ public class HomeBudgetApplication {
         // i na nim operować (ale nie sami go tworzyć)
         CostService costService = context.getBean(CostService.class);
         Cost newCost = costService.saveCost("Jewelry", 250.00, Category.builder().build());
-        Cost newCost5 = costService.saveCost("Car",4000,Category.builder().build());
+        Cost newCost5 = costService.saveCost("Car", 4000, Category.builder().build());
         Cost newCost2 = costService.getCost("Jewelry");
-        System.out.println(newCost);
-        System.out.println(newCost2.getPrice());
-        System.out.println(newCost5.getProduct());
+
+        if (costService.doesCostExist("Pencil")) {
+            System.out.println(true);
+        } else {
+            System.out.println(false);
+        }
+
+        Cost newCost6 = costService.saveCost("Pencil", 5, Category.builder().build());
+        if (costService.doesCostExist("Pencil")) {
+            System.out.println(true);
+        } else {
+            System.out.println(false);
+        }
 
 
         // @Autowired, @Service, @Component, @Repository
@@ -62,17 +69,6 @@ public class HomeBudgetApplication {
         //@Value - Umożliwia wstrzykiwanie wartości (np. z plików konfiguracyjnych) do pól klasy.
         // @Resource pochodzi od javy a @Autowired od springa
         //Autowired wstrzykuje na podstawie typu a Resource na postawie nazwy
-
-        CategoryService categoryService = context.getBean(CategoryService.class);
-        Category newCategory = categoryService.saveCategory("Category1");
-        Category newCategory2 = categoryService.getCategory("Category1");
-        Category newCategory3 = categoryService.deleteCategory("Category1");
-        Category newCategory4 = categoryService.saveCategory("Category2");
-        System.out.println(newCategory);
-        System.out.println(newCategory2.getName());
-        System.out.println(newCategory.getName());
-        System.out.println(newCategory4.getName());
-
 
 
     }
