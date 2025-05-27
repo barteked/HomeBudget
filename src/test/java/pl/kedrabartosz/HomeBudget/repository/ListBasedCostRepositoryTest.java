@@ -13,8 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 class ListBasedCostRepositoryTest {
 
     private ListBasedCostRepository listBasedCostRepository = new ListBasedCostRepository(new ArrayList<>());
+
     @Test
-    public void shouldAddNewCost(){
+    public void shouldAddNewCost() {
         //Given to co daje przygotowuje dane
         String product = "product";
         double price = 22;
@@ -24,8 +25,8 @@ class ListBasedCostRepositoryTest {
 
         //Then sprawdzam wynik z when!
         Assertions.assertEquals(product, actual.getProduct());
-        Assertions.assertEquals(price,actual.getPrice());
-        Assertions.assertEquals(category,actual.getCategory());
+        Assertions.assertEquals(price, actual.getPrice());
+        Assertions.assertEquals(category, actual.getCategory());
     }
 
 }
