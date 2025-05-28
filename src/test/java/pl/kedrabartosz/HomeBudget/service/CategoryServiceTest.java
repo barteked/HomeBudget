@@ -8,6 +8,7 @@ import org.mockito.MockitoAnnotations;
 import pl.kedrabartosz.HomeBudget.Category;
 import pl.kedrabartosz.HomeBudget.repository.CategoryRepository;
 
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,6 +39,64 @@ class CategoryServiceTest {
         Category actual = categoryService.getCategory(name);
         //then
         Assertions.assertEquals(CATEGORY_NAME, actual.getName());
+    }
+
+    @Test
+    public void shouldSaveCategory() {
+        // given
+        String name = "Jerzy";
+        Category category = new Category(name);
+        when(myTestCategoryRepository.save(eq(name))).thenReturn(category);
+
+        // when
+        Category actual = categoryService.saveCategory(name);
+
+        // then
+        assertEquals(name, actual.getName());
+    }
+
+    @Test
+    public void shouldUpdateCategory() {
+        // given
+        String oldName = "Old";
+        String newName = "New";
+        Category category = new Category(newName);
+        when(myTestCategoryRepository.update(eq(oldName), eq(newName))).thenReturn(Optional.of(category));
+
+        // when
+        Category actual = categoryService.updateCategory(oldName, newName);
+
+        // then
+        assertEquals(newName, actual.getName());
+    }
+
+    @Test
+    public void shouldDeleteCategory() {
+        // given
+        String name = "Entertainment";
+        Category category = new Category(name);
+        when(myTestCategoryRepository.deleteCategory(eq(name))).thenReturn(Optional.of(category));
+
+        // when
+        Category actual = categoryService.deleteCategory(name);
+
+        // then
+        assertEquals(name, actual.getName());
+    }
+
+    @Test
+    public void shouldReturnAllCategories() {
+        // given
+        Category a = new Category("A");
+        Category b = new Category("B");
+        List<Category> list = List.of(a, b);
+        when(myTestCategoryRepository.getAll()).thenReturn(list);
+
+        // when
+        List<Category> actual = categoryService.getAllCategories();
+
+        // then
+        assertEquals(list, actual);
     }
 
 }
