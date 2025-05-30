@@ -1,6 +1,7 @@
 package pl.kedrabartosz.HomeBudget.repository;
 
 import java.util.Optional;
+
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Repository;
@@ -18,7 +19,8 @@ public class ListBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Category save(String name) {
-        Category category = new Category(categories.size()+1, name);
+        int newId = categories.size() + 1;
+        Category category = new Category(newId, name);
         categories.add(category);
         return category;
     }
@@ -46,8 +48,8 @@ public class ListBasedCategoryRepository implements CategoryRepository {
                 .filter(c -> c.getName().equalsIgnoreCase(name))// filtruje elementy spelniajace warunek,
                 // equalsIgnoreCase ignoruje czy to duza czy mala litera!, getname() to po prostu taka sama nazwa porownuje!
                 .findFirst();// zwraca pierwszy element pasujacy --> 4. return Optional bo findFirst zwraca Optionala
-            // co zwracać gdy nie ma co zwrócić:
-            // 1. rzucić wyjątek
+        // co zwracać gdy nie ma co zwrócić:
+        // 1. rzucić wyjątek
 //                .orElseThrow(() -> new IllegalArgumentException("Can't find Category with this name " + name));
         // 2. zwrócić pusty obiekt (Null Pattern)
         //.orElse(Category.builder().build());
@@ -62,7 +64,7 @@ public class ListBasedCategoryRepository implements CategoryRepository {
     @Override
     public Optional<Category> deleteCategory(String name) {
         Optional<Category> toRemoveOptional = getCategory(name);
-        if (toRemoveOptional.isEmpty()){
+        if (toRemoveOptional.isEmpty()) {
             return Optional.empty();
         }
         Category toRemoveCategory = toRemoveOptional.get();
