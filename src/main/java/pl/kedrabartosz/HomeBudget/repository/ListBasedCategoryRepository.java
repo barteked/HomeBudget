@@ -18,7 +18,7 @@ public class ListBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Category save(String name) {
-        Category category = new Category(name);
+        Category category = new Category(categories.size()+1, name);
         categories.add(category);
         return category;
     }
