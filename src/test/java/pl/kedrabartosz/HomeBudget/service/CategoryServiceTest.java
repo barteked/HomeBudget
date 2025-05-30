@@ -13,13 +13,17 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.eq;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static pl.kedrabartosz.HomeBudget.service.MyTestCategoryRepository.CATEGORY_NAME;
 
 class CategoryServiceTest {
-    private CategoryService categoryService;
+
+    private static final int DEFAULT_ID = 1;
+
     @Mock
     private CategoryRepository myTestCategoryRepository;
+    private CategoryService categoryService;
 
     @BeforeEach
     public void setUp() {
@@ -30,7 +34,7 @@ class CategoryServiceTest {
     @Test
     public void shouldGetCategory() {
         //given
-        Category category = new Category(1,CATEGORY_NAME);
+        Category category = new Category(DEFAULT_ID, CATEGORY_NAME);
         Optional<Category> getCategoryOptional = Optional.of(category);
         when(myTestCategoryRepository.getCategory(eq("Bartek"))).thenReturn(getCategoryOptional);
         String name = "Bartek";
@@ -45,7 +49,7 @@ class CategoryServiceTest {
     public void shouldSaveCategory() {
         // given
         String name = "Jerzy";
-        Category category = new Category(1,name);
+        Category category = new Category(DEFAULT_ID, name);
         when(myTestCategoryRepository.save(eq(name))).thenReturn(category);
 
         // when
@@ -60,7 +64,7 @@ class CategoryServiceTest {
         // given
         String oldName = "Old";
         String newName = "New";
-        Category category = new Category(1,newName);
+        Category category = new Category(DEFAULT_ID, newName);
         when(myTestCategoryRepository.update(eq(oldName), eq(newName))).thenReturn(Optional.of(category));
 
         // when
@@ -74,7 +78,7 @@ class CategoryServiceTest {
     public void shouldDeleteCategory() {
         // given
         String name = "Entertainment";
-        Category category = new Category(1,name);
+        Category category = new Category(DEFAULT_ID, name);
         when(myTestCategoryRepository.deleteCategory(eq(name))).thenReturn(Optional.of(category));
 
         // when
@@ -87,16 +91,18 @@ class CategoryServiceTest {
     @Test
     public void shouldReturnAllCategories() {
         // given
-        Category a = new Category(1,"A");
-        Category b = new Category(2,"B");
-        List<Category> list = List.of(a, b);
-        when(myTestCategoryRepository.getAll()).thenReturn(list);
+        List<Category> expected = List.of(
+                new Category(1, "A"),
+                new Category(2, "B")
+        );
+        when(myTestCategoryRepository.getAll()).thenReturn(expected);
 
         // when
         List<Category> actual = categoryService.getAllCategories();
 
         // then
-        assertEquals(list, actual);
+        assertEquals(expected, actual);
+        verify(myTestCategoryRepository).getAll();
     }
 
 }
