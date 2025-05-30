@@ -22,7 +22,7 @@ public class MyTestCategoryRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> getCategory(String name) {
-        Category category = new Category(CATEGORY_NAME);
+        Category category = new Category(1,CATEGORY_NAME);
         Optional<Category> getCategoryOptional = Optional.of(category);
         return getCategoryOptional;
     }
