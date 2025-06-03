@@ -61,7 +61,51 @@ public class FileBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> update(String oldName, String newName) {
-        return Optional.empty();
+        List<Category> categories = getAll();
+        boolean updated = false;
+        Category updatedCategory = null;
+
+        for (Category category : categories) {
+            if (category.getName().equalsIgnoreCase(oldName)) {
+                updatedCategory = new Category(category.getId(), newName);
+                categories.set(categories.indexOf(category), updatedCategory);
+                updated = true;
+                break;
+            }
+        }
+
+        if (!updated) {
+            return Optional.empty();
+        }
+
+        BufferedWriter writer = null;
+        try {
+            Path path = Paths.get(
+                    getClass().getClassLoader()
+                            .getResource(CSV_PATH)
+                            .toURI()
+            );
+
+            writer = Files.newBufferedWriter(path);
+            for (Category category : categories) {
+                writer.write(category.getId() + "," + category.getName());
+                writer.newLine();
+            }
+
+        } catch (IOException | URISyntaxException e) {
+            System.err.println("Error writing CSV file: " + e.getMessage());
+            return Optional.empty();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ex) {
+                    System.err.println("Error closing writer: " + ex.getMessage());
+                }
+            }
+        }
+
+        return Optional.of(updatedCategory);
     }
 
     @Override
