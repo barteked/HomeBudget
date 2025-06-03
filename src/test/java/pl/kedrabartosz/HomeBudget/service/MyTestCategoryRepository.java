@@ -8,6 +8,7 @@ import java.util.Optional;
 
 public class MyTestCategoryRepository implements CategoryRepository {
 
+    private static final int DEFAULT_ID = 1;
     public static final String CATEGORY_NAME = "tomek";
 
     @Override
@@ -22,7 +23,7 @@ public class MyTestCategoryRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> getCategory(String name) {
-        Category category = new Category(CATEGORY_NAME);
+        Category category = new Category(DEFAULT_ID, CATEGORY_NAME);
         Optional<Category> getCategoryOptional = Optional.of(category);
         return getCategoryOptional;
     }

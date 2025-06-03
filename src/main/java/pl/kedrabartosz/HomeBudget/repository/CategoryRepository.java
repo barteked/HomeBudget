@@ -1,5 +1,7 @@
 package pl.kedrabartosz.HomeBudget.repository;
 
+import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Optional;
 import pl.kedrabartosz.HomeBudget.Category;
 
