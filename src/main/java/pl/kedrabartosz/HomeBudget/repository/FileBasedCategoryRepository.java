@@ -3,6 +3,7 @@ package pl.kedrabartosz.HomeBudget.repository;
 import pl.kedrabartosz.HomeBudget.Category;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.nio.file.Files;
@@ -18,7 +19,44 @@ public class FileBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Category save(String name) {
-        return null;
+        List<Category> categories = getAll();
+
+        int maxId = categories.stream()
+                .mapToInt(Category::getId)
+                .max()
+                .orElse(0);
+
+        int newId = maxId + 1;
+        Category newCategory = new Category(newId, name);
+        categories.add(newCategory);
+
+        BufferedWriter writer = null;
+        try {
+            Path path = Paths.get(
+                    getClass().getClassLoader()
+                            .getResource(CSV_PATH)
+                            .toURI()
+            );
+
+            writer = Files.newBufferedWriter(path);
+            for (Category category : categories) {
+                writer.write(category.getId() + "," + category.getName());
+                writer.newLine();
+            }
+
+        } catch (IOException | URISyntaxException e) {
+            System.err.println("Error writing CSV file: " + e.getMessage());
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ex) {
+                    System.err.println("Error closing writer: " + ex.getMessage());
+                }
+            }
+        }
+
+        return newCategory;
     }
 
     @Override
