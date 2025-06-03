@@ -110,7 +110,10 @@ public class FileBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> getCategory(String name) {
-        return Optional.empty();
+        List<Category> categories = getAll();
+        return categories.stream()
+                .filter(c -> c.getName().equalsIgnoreCase(name))
+                .findFirst();
     }
 
     @Override
