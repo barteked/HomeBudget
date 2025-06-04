@@ -115,7 +115,45 @@ public class FileBasedCategoryRepository implements CategoryRepository {
 
     @Override
     public Optional<Category> deleteCategory(String name) {
-        return Optional.empty();
+        List<Category> categories = getAll();
+        Optional<Category> categoryToDelete = categories.stream()
+                .filter(c -> c.getName().equalsIgnoreCase(name))
+                .findFirst();
+
+        if (categoryToDelete.isEmpty()) {
+            return Optional.empty();
+        }
+
+        categories.remove(categoryToDelete.get());
+
+        BufferedWriter writer = null;
+        try {
+            Path path = Paths.get(
+                    getClass().getClassLoader()
+                            .getResource(CSV_PATH)
+                            .toURI()
+            );
+
+            writer = Files.newBufferedWriter(path);
+            for (Category category : categories) {
+                writer.write(category.getId() + "," + category.getName());
+                writer.newLine();
+            }
+
+        } catch (IOException | URISyntaxException e) {
+            System.err.println("Error writing CSV file: " + e.getMessage());
+            return Optional.empty();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ex) {
+                    System.err.println("Error closing writer: " + ex.getMessage());
+                }
+            }
+        }
+
+        return categoryToDelete;
     }
 
     @Override
