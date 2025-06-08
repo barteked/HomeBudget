@@ -34,6 +34,7 @@ public class FileBasedCategoryRepository implements CategoryRepository {
         try {
             Path path = Paths.get(CSV_PATH);
 
+
             writer = Files.newBufferedWriter(path);
             for (Category category : categories) {
                 writer.write(category.getId() + "," + category.getName());
@@ -43,6 +44,7 @@ public class FileBasedCategoryRepository implements CategoryRepository {
 
         } catch (IOException e) {
             System.err.println("Error writing CSV file: " + e.getMessage());
+            return Optional.empty();
         } finally {
             if (writer != null) {
                 try {
@@ -53,30 +55,33 @@ public class FileBasedCategoryRepository implements CategoryRepository {
             }
         }
 
-        return newCategory;
-    }
-
-    @Override
-    public Optional<Category> update(String oldName, String newName) {
-        return Optional.empty();
+        return Optional.of(updatedCategory);
     }
 
     @Override
     public Optional<Category> getCategory(String name) {
-        return Optional.empty();
+        List<Category> categories = getAll();
+        return categories.stream()
+                .filter(c -> c.getName().equalsIgnoreCase(name))
+                .findFirst();
     }
 
     @Override
     public Optional<Category> deleteCategory(String name) {
-        return Optional.empty();
-    }
+        List<Category> categories = getAll();
+        Optional<Category> categoryToDelete = categories.stream()
+                .filter(c -> c.getName().equalsIgnoreCase(name))
+                .findFirst();
 
-    @Override
-    public List<Category> getAll() {
-        List<Category> category = new ArrayList<>();
-        BufferedReader reader = null;
+        if (categoryToDelete.isEmpty()) {
+            return Optional.empty();
+        }
 
+        categories.remove(categoryToDelete.get());
+
+        BufferedWriter writer = null;
         try {
+
             Path path = Paths.get(CSV_PATH);
 
 
