@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import pl.kedrabartosz.HomeBudget.repository.CostRepository;
 import pl.kedrabartosz.HomeBudget.repository.CostRepositoryFactory;
+import pl.kedrabartosz.HomeBudget.repository.FileBasedCategoryRepository;
 import pl.kedrabartosz.HomeBudget.repository.ListBasedCostRepository;
 import pl.kedrabartosz.HomeBudget.service.CategoryService;
 import pl.kedrabartosz.HomeBudget.service.CostService;
@@ -57,6 +58,12 @@ public class HomeBudgetApplication {
         } else {
             System.out.println(false);
         }
+
+        FileBasedCategoryRepository fileBasedCategoryRepository = new FileBasedCategoryRepository();
+        Category buildHome = fileBasedCategoryRepository.save("budowadomu");
+        Category jewelry = fileBasedCategoryRepository.save("jewelery");
+        System.out.println(buildHome);
+        System.out.println(fileBasedCategoryRepository.getAll());
 
 
         // @Autowired, @Service, @Component, @Repository
