@@ -34,7 +34,6 @@ public class FileBasedCategoryRepository implements CategoryRepository {
         try {
             Path path = Paths.get(CSV_PATH);
 
-
             writer = Files.newBufferedWriter(path);
             for (Category category : categories) {
                 writer.write(category.getId() + "," + category.getName());
@@ -43,6 +42,54 @@ public class FileBasedCategoryRepository implements CategoryRepository {
             writer.flush();
 
         } catch (IOException e) {
+            System.err.println("Error writing CSV file: " + e.getMessage());
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ex) {
+                    System.err.println("Error closing writer: " + ex.getMessage());
+                }
+            }
+        }
+
+        return newCategory;
+    }
+
+    @Override
+    public Optional<Category> update(String oldName, String newName) {
+        List<Category> categories = getAll();
+        boolean updated = false;
+        Category updatedCategory = null;
+
+        for (Category category : categories) {
+            if (category.getName().equalsIgnoreCase(oldName)) {
+                updatedCategory = new Category(category.getId(), newName);
+                categories.set(categories.indexOf(category), updatedCategory);
+                updated = true;
+                break;
+            }
+        }
+
+        if (!updated) {
+            return Optional.empty();
+        }
+
+        BufferedWriter writer = null;
+        try {
+            Path path = Paths.get(
+                    getClass().getClassLoader()
+                            .getResource(CSV_PATH)
+                            .toURI()
+            );
+
+            writer = Files.newBufferedWriter(path);
+            for (Category category : categories) {
+                writer.write(category.getId() + "," + category.getName());
+                writer.newLine();
+            }
+
+        } catch (IOException | URISyntaxException e) {
             System.err.println("Error writing CSV file: " + e.getMessage());
             return Optional.empty();
         } finally {
@@ -81,7 +128,40 @@ public class FileBasedCategoryRepository implements CategoryRepository {
 
         BufferedWriter writer = null;
         try {
+            Path path = Paths.get(
+                    getClass().getClassLoader()
+                            .getResource(CSV_PATH)
+                            .toURI()
+            );
 
+            writer = Files.newBufferedWriter(path);
+            for (Category category : categories) {
+                writer.write(category.getId() + "," + category.getName());
+                writer.newLine();
+            }
+
+        } catch (IOException | URISyntaxException e) {
+            System.err.println("Error writing CSV file: " + e.getMessage());
+            return Optional.empty();
+        } finally {
+            if (writer != null) {
+                try {
+                    writer.close();
+                } catch (IOException ex) {
+                    System.err.println("Error closing writer: " + ex.getMessage());
+                }
+            }
+        }
+
+        return categoryToDelete;
+    }
+
+    @Override
+    public List<Category> getAll() {
+        List<Category> category = new ArrayList<>();
+        BufferedReader reader = null;
+
+        try {
             Path path = Paths.get(CSV_PATH);
 
 
