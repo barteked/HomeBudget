@@ -1,26 +1,21 @@
 package pl.kedrabartosz.HomeBudget.service;
 
+import java.util.List;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import pl.kedrabartosz.HomeBudget.Category;
 import pl.kedrabartosz.HomeBudget.Cost;
 import pl.kedrabartosz.HomeBudget.repository.CostRepository;
-import pl.kedrabartosz.HomeBudget.repository.ListBasedCostRepository;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class CostService {
 
-    private final ListBasedCostRepository listBasedCostRepository;
     private CostRepository listBasedRepository;
 
-    public CostService(@Autowired CostRepository listBasedRepository, ListBasedCostRepository listBasedCostRepository) {
+    public CostService(@Autowired CostRepository listBasedRepository) {
         // = to przypisanie = to jest włąśnie wstrzykiwanie zależności
         this.listBasedRepository = listBasedRepository;
-        this.listBasedCostRepository = listBasedCostRepository;
     }
 
     public Cost saveCost(String name, double price, Category category) {
@@ -28,7 +23,7 @@ public class CostService {
     }
 
     public Cost updateCost(String oldProduct, String newProduct, double newPrice) {
-        Optional<Cost> updateCostOptional = listBasedCostRepository.updateCost(oldProduct, newProduct, newPrice);
+        Optional<Cost> updateCostOptional = listBasedRepository.updateCost(oldProduct, newProduct, newPrice);
         if (updateCostOptional.isEmpty()) {
             System.out.println("Could not update cost with oldProduct" + oldProduct);
             throw new IllegalArgumentException("Colud not update cost");
@@ -45,7 +40,7 @@ public class CostService {
     }
 
     public Cost getCost(String product) {
-        Optional<Cost> costOptional = listBasedCostRepository.getCost(product);
+        Optional<Cost> costOptional = listBasedRepository.getCost(product);
         if (costOptional.isEmpty()) {
             System.out.println("Could not get Cost with product" + product);
             throw new IllegalArgumentException("Could not get Cost");
@@ -54,7 +49,7 @@ public class CostService {
     }
 
     public Cost deleteCost(String product) {
-        Optional<Cost> deletedCostOptional = listBasedCostRepository.deleteCost(product);
+        Optional<Cost> deletedCostOptional = listBasedRepository.deleteCost(product);
         if (deletedCostOptional.isEmpty()) {
             System.out.println("Could not delete cost with product" + product);
             throw new IllegalArgumentException("Could not delete cost");
