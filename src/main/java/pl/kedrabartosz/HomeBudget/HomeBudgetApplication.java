@@ -2,6 +2,7 @@ package pl.kedrabartosz.HomeBudget;
 
 import java.util.ArrayList;
 
+import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,6 +12,7 @@ import pl.kedrabartosz.HomeBudget.repository.FileBasedCategoryRepository;
 import pl.kedrabartosz.HomeBudget.repository.ListBasedCostRepository;
 import pl.kedrabartosz.HomeBudget.service.CategoryService;
 import pl.kedrabartosz.HomeBudget.service.CostService;
+import pl.kedrabartosz.HomeBudget.service.ShoppingCartService;
 
 @SpringBootApplication
 public class HomeBudgetApplication {
@@ -65,6 +67,24 @@ public class HomeBudgetApplication {
         System.out.println(buildHome);
         System.out.println(fileBasedCategoryRepository.getAll());
 
+        //shopping cart
+
+        ShoppingCartService cartService = context.getBean(ShoppingCartService.class);
+
+        Person me = new Person("Bartosz");
+
+        cartService.addExpense(me, "Mleko", 5.50, "food");
+        cartService.addExpense(me, "Chleb", 3.20, "food");
+        cartService.addExpense(me, "Książka Java", 45.00, "development");
+
+        cartService.updateExpense(me, "Chleb", "Chleb Razowy", 4.00);
+
+        cartService.removeExpense(me, "Mleko");
+
+        ShoppingCart cart = cartService.getCart(me);
+        cart.getItems().forEach(System.out::println);
+        System.out.println("All: " + cart.getPriceOfItems() + " pln");
+        System.out.println("Last udpate: " + cart.getTime());
 
         // @Autowired, @Service, @Component, @Repository
         // HW:  @RestController, @Bean, @Configuration,
