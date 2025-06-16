@@ -4,18 +4,23 @@ import pl.kedrabartosz.HomeBudget.Cost;
 import pl.kedrabartosz.HomeBudget.Person;
 import pl.kedrabartosz.HomeBudget.ShoppingCart;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface ShoppingCartService {
 
-    Cost addExpense(Person person, String product, double price, String categoryName);
 
-    Optional<Cost> updateExpense(Person person,
-                                 String oldProduct,
-                                 String newProduct,
-                                 double newPrice);
+    Cost addItemToCart(Person person, String product, double price, String categoryName);
 
-    Optional<Cost> removeExpense(Person person, String product);
+    Optional<ShoppingCart> updateCart(Person person, String oldProduct, String newProduct, double newPrice);
 
-    ShoppingCart getCart(Person person);
+
+
+
+    Optional<Cost> removeItemFromCart(Person person, String product);
+
+    List<ShoppingCart> getShoppingCarts(Person person);
+    ShoppingCart getShoppingCart(Person person);
+    ShoppingCart checkout(Person person);
+
 }

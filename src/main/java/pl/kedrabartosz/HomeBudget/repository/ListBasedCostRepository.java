@@ -5,6 +5,7 @@ import lombok.Builder;
 import org.springframework.stereotype.Repository;
 import pl.kedrabartosz.HomeBudget.Category;
 import pl.kedrabartosz.HomeBudget.Cost;
+import pl.kedrabartosz.HomeBudget.Person;
 import pl.kedrabartosz.HomeBudget.SimpleCost;
 
 import java.util.ArrayList;
@@ -18,10 +19,10 @@ public class ListBasedCostRepository implements CostRepository {
     private List<Cost> costs;
 
     @Override
-    public Cost addCost(String product, double price, Category category) {
-        Cost exampleCost = new SimpleCost(product, price, category);
-        costs.add(exampleCost);
-        return exampleCost;
+    public Cost addCost(Person person,String product, double price, Category category) {
+        Cost cost = new SimpleCost(product, price, category,person);
+        costs.add(cost);
+        return cost;
     }
 
     @Override

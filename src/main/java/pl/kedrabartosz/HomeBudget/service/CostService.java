@@ -2,10 +2,12 @@ package pl.kedrabartosz.HomeBudget.service;
 
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.kedrabartosz.HomeBudget.Category;
 import pl.kedrabartosz.HomeBudget.Cost;
+import pl.kedrabartosz.HomeBudget.Person;
 import pl.kedrabartosz.HomeBudget.repository.CostRepository;
 
 @Service
@@ -18,8 +20,8 @@ public class CostService {
         this.listBasedRepository = listBasedRepository;
     }
 
-    public Cost saveCost(String name, double price, Category category) {
-        return listBasedRepository.addCost(name, price, category);
+    public Cost saveCost(Person person, String name, double price, Category category) {
+        return listBasedRepository.addCost(person, name, price, category);
     }
 
     public Cost updateCost(String oldProduct, String newProduct, double newPrice) {

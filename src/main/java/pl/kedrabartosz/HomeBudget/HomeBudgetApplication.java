@@ -1,6 +1,7 @@
 package pl.kedrabartosz.HomeBudget;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
@@ -44,9 +45,12 @@ public class HomeBudgetApplication {
         // pozwalamy Springowi to zrobić i my chcemy tylko się dostać do tego beana, co on stworzył,
         // i na nim operować (ale nie sami go tworzyć)
         CostService costService = context.getBean(CostService.class);
-        Cost newCost = costService.saveCost("Jewelry", 250.00, Category.builder().build());
-        Cost newCost5 = costService.saveCost("Car", 4000, Category.builder().build());
-        Cost newCost2 = costService.getCost("Jewelry");
+
+        Person me = new Person("Bartosz");
+
+
+        Cost newCost = costService.saveCost(me, "Jewelry", 250.00, Category.builder().build());
+        Cost newCost5 = costService.saveCost(me, "Car", 4000, Category.builder().build());
 
         if (costService.doesCostExist("Pencil")) {
             System.out.println(true);
@@ -54,7 +58,7 @@ public class HomeBudgetApplication {
             System.out.println(false);
         }
 
-        Cost newCost6 = costService.saveCost("Pencil", 5, Category.builder().build());
+        Cost newCost6 = costService.saveCost(me, "Pencil", 5, Category.builder().build());
         if (costService.doesCostExist("Pencil")) {
             System.out.println(true);
         } else {
@@ -71,20 +75,25 @@ public class HomeBudgetApplication {
 
         ShoppingCartService cartService = context.getBean(ShoppingCartService.class);
 
-        Person me = new Person("Bartosz");
 
-        cartService.addExpense(me, "Mleko", 5.50, "food");
-        cartService.addExpense(me, "Chleb", 3.20, "food");
-        cartService.addExpense(me, "Książka Java", 45.00, "development");
 
-        cartService.updateExpense(me, "Chleb", "Chleb Razowy", 4.00);
+        cartService.addItemToCart(me, "Mleko", 5.50, "food");
+        cartService.addItemToCart(me, "Chleb", 3.20, "food");
+        cartService.addItemToCart(me, "Książka Java", 45.00, "development");
 
-        cartService.removeExpense(me, "Mleko");
 
-        ShoppingCart cart = cartService.getCart(me);
-        cart.getItems().forEach(System.out::println);
-        System.out.println("All: " + cart.getPriceOfItems() + " pln");
-        System.out.println("Last udpate: " + cart.getTime());
+
+        cartService.updateCart(me, "Chleb", "Chleb Razowy", 4.00);
+        cartService.removeItemFromCart(me, "Mleko");
+        ShoppingCart finalCart = cartService.checkout(me);
+
+        finalCart.getItems().forEach(System.out::println);
+        System.out.println("All:  " + finalCart.getPriceOfItems() + " pln");
+        System.out.println("Time: " + finalCart.getTime());
+
+        List<ShoppingCart> all = cartService.getShoppingCarts(me);
+        System.out.println("Number cart for " + me.getName() + ": " + all.size());
+        all.forEach(System.out::println);
 
         // @Autowired, @Service, @Component, @Repository
         // HW:  @RestController, @Bean, @Configuration,
