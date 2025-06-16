@@ -1,10 +1,12 @@
 package pl.kedrabartosz.HomeBudget;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
+@ToString
 @Getter
 public class ShoppingCart {
     private Person person;
@@ -18,4 +20,5 @@ public class ShoppingCart {
         this.priceOfItems = priceOfItems;
         this.time = time;
     }
+
 }

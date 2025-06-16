@@ -2,13 +2,15 @@ package pl.kedrabartosz.HomeBudget;
 
 public interface Cost {
 
-    public double getPrice();
+    String getProduct();
+    void setProduct(String product);
 
-    public Category getCategory();
+    double getPrice();
+    void setPrice(double price);
 
-    public void setProduct(String product);
+    Category getCategory();
+    void setCategory(Category category);
 
-    public String getProduct();
-
-    public void setPrice(double price);
+    Person getPerson();
+    void setPerson(Person person);
 }

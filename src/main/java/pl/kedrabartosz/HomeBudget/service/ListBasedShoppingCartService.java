@@ -8,11 +8,13 @@ import pl.kedrabartosz.HomeBudget.Person;
 import pl.kedrabartosz.HomeBudget.ShoppingCart;
 import pl.kedrabartosz.HomeBudget.repository.CategoryRepository;
 import pl.kedrabartosz.HomeBudget.repository.CostRepository;
+import pl.kedrabartosz.HomeBudget.repository.ShoppingCartRepository;
 
 import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -20,36 +22,55 @@ public class ListBasedShoppingCartService implements ShoppingCartService {
 
     private final CategoryRepository categoryRepository;
     private final CostRepository costRepository;
+    private final ShoppingCartRepository cartRepository;
 
     @Override
-    public Cost addExpense(Person person, String product, double price, String categoryName) {
+    public Cost addItemToCart(Person person, String product, double price, String categoryName) {
         Category category = categoryRepository
                 .getCategory(categoryName)
                 .orElseGet(() -> categoryRepository.save(categoryName));
-
-        return costRepository.addCost(product, price, category);
+        return costRepository.addCost(person, product, price, category);
     }
 
     @Override
-    public Optional<Cost> updateExpense(Person person,
-                                        String oldProduct,
-                                        String newProduct,
-                                        double newPrice) {
-
-        return costRepository.updateCost(oldProduct, newProduct, newPrice);
+    public Optional<ShoppingCart> updateCart(Person person,
+                                             String oldProduct,
+                                             String newProduct,
+                                             double newPrice) {
+        Optional<Cost> updated = costRepository.updateCost(oldProduct, newProduct, newPrice);
+        if (updated.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(checkout(person));
     }
 
     @Override
-    public Optional<Cost> removeExpense(Person person, String product) {
+    public Optional<Cost> removeItemFromCart(Person person, String product) {
         return costRepository.deleteCost(product);
     }
 
     @Override
-    public ShoppingCart getCart(Person person) {
-        List<Cost> items = costRepository.getAll();
+    public ShoppingCart checkout(Person person) {
+        List<Cost> items = costRepository.getAll().stream()
+                .filter(c -> c.getPerson().equals(person))
+                .collect(Collectors.toList());
         BigDecimal total = items.stream()
                 .map(c -> BigDecimal.valueOf(c.getPrice()))
                 .reduce(BigDecimal.ZERO, BigDecimal::add);
-        return new ShoppingCart(person, items, total, Instant.now());
+        ShoppingCart cart = new ShoppingCart(person, items, total, Instant.now());
+        return cartRepository.save(cart);
+    }
+
+    @Override
+    public ShoppingCart getShoppingCart(Person person) {
+        return cartRepository.findAllByPerson(person).stream()
+                .reduce((first, second) -> second)
+                .orElseThrow(() ->
+                        new IllegalStateException("No session for " + person.getName()));
+    }
+
+    @Override
+    public List<ShoppingCart> getShoppingCarts(Person person) {
+        return cartRepository.findAllByPerson(person);
     }
 }
