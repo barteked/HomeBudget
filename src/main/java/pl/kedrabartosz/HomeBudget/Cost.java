@@ -11,6 +11,4 @@ public interface Cost {
     Category getCategory();
     void setCategory(Category category);
 
-    Person getPerson();
-    void setPerson(Person person);
 }

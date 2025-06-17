@@ -2,15 +2,15 @@ package pl.kedrabartosz.HomeBudget;
 
 public class SimpleCost implements Cost {
     private String product;
+    private String name;
     private double price;
     private Category category;
-    private Person person;
 
-    public SimpleCost(String product, double price, Category category, Person person) {
+    public SimpleCost(String product, String name, double price, Category category) {
         this.product = product;
-        this.price = price;
+      this.name = name;
+      this.price = price;
         this.category = category;
-        this.person = person;
     }
 
     @Override
@@ -44,17 +44,7 @@ public class SimpleCost implements Cost {
     }
 
     @Override
-    public Person getPerson() {
-        return person;
-    }
-
-    @Override
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    @Override
     public String toString() {
-        return product + ": " + price + " zł, Category: " + category.getName() + ", Person: " + person.getName();
+        return product + ": " + price + " zł, Category: " + category.getName() ;
     }
 }
