@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.kedrabartosz.HomeBudget.Category;
 import pl.kedrabartosz.HomeBudget.Cost;
+import pl.kedrabartosz.HomeBudget.Person;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,11 +18,12 @@ class ListBasedCostRepositoryTest {
     @Test
     public void shouldAddNewCost() {
         //Given to co daje przygotowuje dane
+        Person owner = new Person("Julka");
         String product = "product";
         double price = 22;
         Category category = Category.builder().build();
         //When co testujemy 1 max 2 linijki!!
-        Cost actual = listBasedCostRepository.addCost(product, price, category, "name");
+        Cost actual = listBasedCostRepository.addCost(owner, product, price, category);
 
         //Then sprawdzam wynik z when!
         Assertions.assertEquals(product, actual.getProduct());

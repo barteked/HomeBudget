@@ -15,15 +15,25 @@ public class ListBasedReceiptRepository implements ReceiptRepository {
     private final List<Receipt> store = new ArrayList<>();
 
     @Override
-    public Receipt save(Receipt cart) {
-        store.add(cart);
-        return cart;
+    public Receipt save(Receipt receipt) {
+        store.add(receipt);
+        return receipt;
+    }
+
+    @Override
+    public void delete(Receipt receipt) {
+        store.remove(receipt);
+    }
+
+    @Override
+    public List<Receipt> findAll() {
+        return new ArrayList<>(store);
     }
 
     @Override
     public List<Receipt> findAllByPerson(Person person) {
         return store.stream()
-                .filter(c -> c.getPerson().equals(person))
+                .filter(r -> r.getPerson().equals(person))
                 .collect(Collectors.toList());
     }
 }
