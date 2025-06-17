@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CostRepository {
-    Cost addCost(Person person, String product, double price, Category category);
+    Cost addCost(String product, double price, Category category, String name);
 
     Optional<Cost> updateCost(String oldProduct, String newProduct, double newPrice);
 

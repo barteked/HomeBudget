@@ -3,7 +3,6 @@ package pl.kedrabartosz.HomeBudget;
 import java.util.ArrayList;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,9 +10,8 @@ import pl.kedrabartosz.HomeBudget.repository.CostRepository;
 import pl.kedrabartosz.HomeBudget.repository.CostRepositoryFactory;
 import pl.kedrabartosz.HomeBudget.repository.FileBasedCategoryRepository;
 import pl.kedrabartosz.HomeBudget.repository.ListBasedCostRepository;
-import pl.kedrabartosz.HomeBudget.service.CategoryService;
 import pl.kedrabartosz.HomeBudget.service.CostService;
-import pl.kedrabartosz.HomeBudget.service.ShoppingCartService;
+import pl.kedrabartosz.HomeBudget.service.ReceiptService;
 
 @SpringBootApplication
 public class HomeBudgetApplication {
@@ -73,25 +71,11 @@ public class HomeBudgetApplication {
 
         //shopping cart
 
-        ShoppingCartService cartService = context.getBean(ShoppingCartService.class);
+        ReceiptService cartService = context.getBean(ReceiptService.class);
 
 
 
-        cartService.addItemToCart(me, "Mleko", 5.50, "food");
-        cartService.addItemToCart(me, "Chleb", 3.20, "food");
-        cartService.addItemToCart(me, "Książka Java", 45.00, "development");
-
-
-
-        cartService.updateCart(me, "Chleb", "Chleb Razowy", 4.00);
-        cartService.removeItemFromCart(me, "Mleko");
-        ShoppingCart finalCart = cartService.checkout(me);
-
-        finalCart.getItems().forEach(System.out::println);
-        System.out.println("All:  " + finalCart.getPriceOfItems() + " pln");
-        System.out.println("Time: " + finalCart.getTime());
-
-        List<ShoppingCart> all = cartService.getShoppingCarts(me);
+        List<Receipt> all = cartService.getShoppingCarts(me);
         System.out.println("Number cart for " + me.getName() + ": " + all.size());
         all.forEach(System.out::println);
 

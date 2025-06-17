@@ -21,7 +21,7 @@ class ListBasedCostRepositoryTest {
         double price = 22;
         Category category = Category.builder().build();
         //When co testujemy 1 max 2 linijki!!
-        Cost actual = listBasedCostRepository.addCost(product, price, category);
+        Cost actual = listBasedCostRepository.addCost(product, price, category, "name");
 
         //Then sprawdzam wynik z when!
         Assertions.assertEquals(product, actual.getProduct());

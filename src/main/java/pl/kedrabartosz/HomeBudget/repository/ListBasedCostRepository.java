@@ -19,8 +19,8 @@ public class ListBasedCostRepository implements CostRepository {
     private List<Cost> costs;
 
     @Override
-    public Cost addCost(Person person,String product, double price, Category category) {
-        Cost cost = new SimpleCost(product, price, category,person);
+    public Cost addCost(String product, double price, Category category, String name) {
+        Cost cost = new SimpleCost(product, name, price, category);
         costs.add(cost);
         return cost;
     }
