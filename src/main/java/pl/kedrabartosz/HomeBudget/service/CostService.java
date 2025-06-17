@@ -28,7 +28,7 @@ public class CostService {
         Optional<Cost> updateCostOptional = listBasedRepository.updateCost(oldProduct, newProduct, newPrice);
         if (updateCostOptional.isEmpty()) {
             System.out.println("Could not update cost with oldProduct" + oldProduct);
-            throw new IllegalArgumentException("Colud not update cost");
+            throw new IllegalArgumentException("Could not update cost");
         }
         return updateCostOptional.get();
     }

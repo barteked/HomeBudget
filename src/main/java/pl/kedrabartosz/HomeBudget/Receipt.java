@@ -23,8 +23,12 @@ public class Receipt {
         this.time = time;
     }
 
-    private BigDecimal getFullPrice(){
-     // todo - zadanie, obliczyć sumę wszystkich koztów z items
+    private BigDecimal getFullPrice() {
+        BigDecimal sum = BigDecimal.ZERO;
+        for (Cost c : items) {
+            sum = sum.add(BigDecimal.valueOf(c.getPrice()));
+        }
+        return sum;
     }
 
 }

@@ -16,31 +16,57 @@ import java.util.Optional;
 @AllArgsConstructor
 public class ListBasedReceiptService implements ReceiptService {
 
-    private final CategoryService categoryService;
-    private final CostService costService;
     private final ReceiptRepository receiptRepository;
 
     @Override
     public Receipt saveNewReceipt(Person person, List<Cost> products, Category category, Instant timeOfPurchase) {
-     // todo
+        Receipt receipt = new Receipt(person, products, timeOfPurchase);
+        return receiptRepository.save(receipt);
     }
 
     @Override
     public Optional<Receipt> updateReceipt(
-        Person person, Instant timeOfPurchase, String oldProduct, String newProduct, double newPrice
+            Person person, Instant timeOfPurchase, String oldProduct, String newProduct, double newPrice
     ) {
-        // todo - rozpoznajesz po tym ze receipt.person equals person && receipt.date == timeOfPurchase
+        Optional<Receipt> opt = receiptRepository.findAllByPerson(person).stream()
+                .filter(r -> r.getTime().equals(timeOfPurchase))
+                .findFirst();
+
+        if (opt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Receipt receipt = opt.get();
+
+        receipt.getItems().stream()
+                .filter(c -> c.getProduct().equalsIgnoreCase(oldProduct))
+                .findFirst()
+                .ifPresent(c -> {
+                    c.setProduct(newProduct);
+                    c.setPrice(newPrice);
+                });
+
+        return Optional.of(receiptRepository.save(receipt));
     }
 
     @Override
     public boolean removeReceipt(Person person, Instant timeOfPurchase) {
-        // todo
+        Optional<Receipt> opt = receiptRepository.findAllByPerson(person).stream()
+                .filter(r -> r.getTime().equals(timeOfPurchase))
+                .findFirst();
+
+        if (opt.isEmpty()) {
+            return false;
+        }
+
+        receiptRepository.delete(opt.get());
+        return true;
     }
 
 
     @Override
     public List<Receipt> getAllCarts() {
-      // todo
+        return receiptRepository.findAll();
     }
 
     @Override

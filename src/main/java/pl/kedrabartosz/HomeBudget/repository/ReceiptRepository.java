@@ -7,5 +7,10 @@ import java.util.List;
 
 public interface ReceiptRepository {
     Receipt save(Receipt cart);
+
     List<Receipt> findAllByPerson(Person person);
+
+    void delete(Receipt receipt);
+
+    List<Receipt> findAll();
 }
