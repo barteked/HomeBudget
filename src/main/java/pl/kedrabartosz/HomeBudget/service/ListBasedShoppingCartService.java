@@ -51,12 +51,18 @@ public class ListBasedShoppingCartService implements ShoppingCartService {
 
     @Override
     public ShoppingCart checkout(Person person) {
-        List<Cost> items = costRepository.getAll().stream()
+        List<Cost> items = costRepository.getAll().stream()// getall out!
                 .filter(c -> c.getPerson().equals(person))
                 .collect(Collectors.toList());
-        BigDecimal total = items.stream()
+       /* BigDecimal total = items.stream()
                 .map(c -> BigDecimal.valueOf(c.getPrice()))
-                .reduce(BigDecimal.ZERO, BigDecimal::add);
+                .reduce(BigDecimal.ZERO, (elementOne, elementTwo) -> elementOne.add(elementTwo)); */
+        BigDecimal total = BigDecimal.ZERO;
+        for (int i = 0; i < items.size(); i++) {
+            Cost cost = items.get(i);
+            BigDecimal priceBigDecimal = BigDecimal.valueOf(cost.getPrice());
+            total = total.add(priceBigDecimal);
+        }
         ShoppingCart cart = new ShoppingCart(person, items, total, Instant.now());
         return cartRepository.save(cart);
     }
