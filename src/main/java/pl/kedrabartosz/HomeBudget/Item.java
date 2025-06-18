@@ -1,6 +1,6 @@
 package pl.kedrabartosz.HomeBudget;
 
-public interface Cost {
+public interface Item {
 
     String getProduct();
 
@@ -14,7 +14,5 @@ public interface Cost {
 
     void setCategory(Category category);
 
-    Person getPerson();
 
-    void setPerson(Person person);
 }

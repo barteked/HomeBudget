@@ -4,9 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Repository;
 import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Cost;
-import pl.kedrabartosz.HomeBudget.Person;
-import pl.kedrabartosz.HomeBudget.SimpleCost;
+import pl.kedrabartosz.HomeBudget.Item;
+import pl.kedrabartosz.HomeBudget.SimpleItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,44 +15,44 @@ import java.util.Optional;
 @AllArgsConstructor
 @Builder
 public class ListBasedCostRepository implements CostRepository {
-    private List<Cost> costs;
+    private List<Item> items;
 
     @Override
-    public Cost addCost(Person owner, String product, double price, Category category) {
-        Cost cost = new SimpleCost(product, price, category, owner);
-        costs.add(cost);
-        return cost;
+    public Item addCost(String product, double price, Category category) {
+        Item item = new SimpleItem(product, price, category);
+        items.add(item);
+        return item;
     }
 
 
     @Override
-    public Optional<Cost> updateCost(String oldProduct, String newProduct, double newPrice) {
-        Optional<Cost> existingCostOptional = this.getCost(oldProduct);
+    public Optional<Item> updateCost(String oldProduct, String newProduct, double newPrice) {
+        Optional<Item> existingCostOptional = this.getCost(oldProduct);
         existingCostOptional.ifPresent(cost -> cost.setPrice(newPrice));
         return existingCostOptional;
     }
 
     @Override
-    public Optional<Cost> getCost(String product) {
-        return costs.stream()
+    public Optional<Item> getCost(String product) {
+        return items.stream()
                 .filter(cost -> cost.getProduct().equalsIgnoreCase(product))
                 .findFirst();
     }
 
     @Override
-    public Optional<Cost> deleteCost(String product) {
-        Optional<Cost> toRemoveOptional = getCost(product);
+    public Optional<Item> deleteCost(String product) {
+        Optional<Item> toRemoveOptional = getCost(product);
         if (toRemoveOptional.isEmpty()) {
             return Optional.empty();
         }
-        Cost toRemoveCost = toRemoveOptional.get();
-        costs.remove(toRemoveCost);
-        return Optional.of(toRemoveCost);
+        Item toRemoveItem = toRemoveOptional.get();
+        items.remove(toRemoveItem);
+        return Optional.of(toRemoveItem);
     }
 
     @Override
-    public List<Cost> getAll() {
-        return new ArrayList<>(costs);
+    public List<Item> getAll() {
+        return new ArrayList<>(items);
     }
 
 }

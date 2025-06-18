@@ -3,7 +3,7 @@ package pl.kedrabartosz.HomeBudget.service;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Cost;
+import pl.kedrabartosz.HomeBudget.Item;
 import pl.kedrabartosz.HomeBudget.Person;
 import pl.kedrabartosz.HomeBudget.Receipt;
 import pl.kedrabartosz.HomeBudget.repository.ReceiptRepository;
@@ -19,34 +19,38 @@ public class ListBasedReceiptService implements ReceiptService {
     private final ReceiptRepository receiptRepository;
 
     @Override
-    public Receipt saveNewReceipt(Person person, List<Cost> products, Category category, Instant timeOfPurchase) {
+    public Receipt saveNewReceipt(Person person, List<Item> products, Category category, Instant timeOfPurchase) {
         Receipt receipt = new Receipt(person, products, timeOfPurchase);
         return receiptRepository.save(receipt);
     }
 
     @Override
     public Optional<Receipt> updateReceipt(
-            Person person, Instant timeOfPurchase, String oldProduct, String newProduct, double newPrice
+            Person person,
+            Instant timeOfPurchase,
+            String oldProduct,
+            String newProduct,
+            double newPrice
     ) {
-        Optional<Receipt> opt = receiptRepository.findAllByPerson(person).stream()
-                .filter(r -> r.getTime().equals(timeOfPurchase))
+
+        Optional<Receipt> receiptOptional = receiptRepository.findAllByPerson(person).stream()
+                .filter(receipt -> receipt.getTime().equals(timeOfPurchase))
                 .findFirst();
 
-        if (opt.isEmpty()) {
+        if (receiptOptional.isEmpty()) {
             return Optional.empty();
         }
 
-        Receipt receipt = opt.get();
+        Receipt receipt = receiptOptional.get();
 
         receipt.getItems().stream()
-                .filter(c -> c.getProduct().equalsIgnoreCase(oldProduct))
-                .findFirst()
-                .ifPresent(c -> {
-                    c.setProduct(newProduct);
-                    c.setPrice(newPrice);
+                .filter(item -> item.getProduct().equalsIgnoreCase(oldProduct))
+                .forEach(item -> {
+                    item.setProduct(newProduct);
+                    item.setPrice(newPrice);
                 });
 
-        return Optional.of(receiptRepository.save(receipt));
+        return Optional.of(receipt);
     }
 
     @Override

@@ -33,7 +33,7 @@ public class ListBasedReceiptRepository implements ReceiptRepository {
     @Override
     public List<Receipt> findAllByPerson(Person person) {
         return store.stream()
-                .filter(r -> r.getPerson().equals(person))
+                .filter(receipt -> receipt.getPerson().equals(person))
                 .collect(Collectors.toList());
     }
 }
