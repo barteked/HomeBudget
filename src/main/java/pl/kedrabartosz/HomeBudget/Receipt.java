@@ -12,11 +12,11 @@ import java.util.List;
 public class Receipt {
 
     private Person person;
-    private List<Cost> items;
+    private List<Item> items;
     private BigDecimal priceOfItems;
     private Instant time;
 
-    public Receipt(Person person, List<Cost> items, Instant time) {
+    public Receipt(Person person, List<Item> items, Instant time) {
         this.person = person;
         this.items = items;
         this.priceOfItems = getFullPrice();
@@ -25,8 +25,8 @@ public class Receipt {
 
     private BigDecimal getFullPrice() {
         BigDecimal sum = BigDecimal.ZERO;
-        for (Cost c : items) {
-            sum = sum.add(BigDecimal.valueOf(c.getPrice()));
+        for (Item item : items) {
+            sum = sum.add(BigDecimal.valueOf(item.getPrice()));
         }
         return sum;
     }

@@ -47,8 +47,8 @@ public class HomeBudgetApplication {
         Person me = new Person("Bartosz");
 
 
-        Cost newCost = costService.saveCost(me, "Jewelry", 250.00, Category.builder().build());
-        Cost newCost5 = costService.saveCost(me, "Car", 4000, Category.builder().build());
+        Item newItem = costService.saveCost( "Jewelry", 250.00, Category.builder().build());
+        Item newItem5 = costService.saveCost( "Car", 4000, Category.builder().build());
 
         if (costService.doesCostExist("Pencil")) {
             System.out.println(true);
@@ -56,7 +56,7 @@ public class HomeBudgetApplication {
             System.out.println(false);
         }
 
-        Cost newCost6 = costService.saveCost(me, "Pencil", 5, Category.builder().build());
+        Item newItem6 = costService.saveCost( "Pencil", 5, Category.builder().build());
         if (costService.doesCostExist("Pencil")) {
             System.out.println(true);
         } else {
