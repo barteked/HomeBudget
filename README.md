@@ -14,7 +14,7 @@
 Each expense includes:
 - Who made the purchase
 - What was purchased
-- How much it item
+- How much it cost
 - The purchase date
 
 Expenses are grouped into categories like:  

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 class ListBasedItemRepositoryTest {
 
-    private ListBasedCostRepository listBasedCostRepository = new ListBasedCostRepository(new ArrayList<>());
+    private ListBasedItemRepository listBasedCostRepository = new ListBasedItemRepository(new ArrayList<>());
 
     @Test
     public void shouldAddNewCost() {
@@ -18,7 +18,7 @@ class ListBasedItemRepositoryTest {
         double price = 22;
         Category category = Category.builder().build();
         //When co testujemy 1 max 2 linijki!!
-        Item actual = listBasedCostRepository.addCost(product, price, category);
+        Item actual = listBasedCostRepository.addItem(product, price, category);
 
         //Then sprawdzam wynik z when!
         Assertions.assertEquals(product, actual.getProduct());

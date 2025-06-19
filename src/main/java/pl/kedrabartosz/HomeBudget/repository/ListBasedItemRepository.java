@@ -14,11 +14,11 @@ import java.util.Optional;
 @Repository
 @AllArgsConstructor
 @Builder
-public class ListBasedCostRepository implements CostRepository {
+public class ListBasedItemRepository implements ItemRepository {
     private List<Item> items;
 
     @Override
-    public Item addCost(String product, double price, Category category) {
+    public Item addItem(String product, double price, Category category) {
         Item item = new SimpleItem(product, price, category);
         items.add(item);
         return item;
@@ -26,22 +26,22 @@ public class ListBasedCostRepository implements CostRepository {
 
 
     @Override
-    public Optional<Item> updateCost(String oldProduct, String newProduct, double newPrice) {
-        Optional<Item> existingCostOptional = this.getCost(oldProduct);
-        existingCostOptional.ifPresent(cost -> cost.setPrice(newPrice));
+    public Optional<Item> updateItem(String oldProduct, String newProduct, double newPrice) {
+        Optional<Item> existingCostOptional = this.getItem(oldProduct);
+        existingCostOptional.ifPresent(item -> item.setPrice(newPrice));
         return existingCostOptional;
     }
 
     @Override
-    public Optional<Item> getCost(String product) {
+    public Optional<Item> getItem(String product) {
         return items.stream()
-                .filter(cost -> cost.getProduct().equalsIgnoreCase(product))
+                .filter(item -> item.getProduct().equalsIgnoreCase(product))
                 .findFirst();
     }
 
     @Override
-    public Optional<Item> deleteCost(String product) {
-        Optional<Item> toRemoveOptional = getCost(product);
+    public Optional<Item> deleteItem(String product) {
+        Optional<Item> toRemoveOptional = getItem(product);
         if (toRemoveOptional.isEmpty()) {
             return Optional.empty();
         }
