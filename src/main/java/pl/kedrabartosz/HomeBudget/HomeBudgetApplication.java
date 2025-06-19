@@ -1,16 +1,17 @@
 package pl.kedrabartosz.HomeBudget;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import pl.kedrabartosz.HomeBudget.repository.CostRepository;
-import pl.kedrabartosz.HomeBudget.repository.CostRepositoryFactory;
+import pl.kedrabartosz.HomeBudget.repository.ItemRepository;
+import pl.kedrabartosz.HomeBudget.repository.ItemRepositoryFactory;
 import pl.kedrabartosz.HomeBudget.repository.FileBasedCategoryRepository;
-import pl.kedrabartosz.HomeBudget.repository.ListBasedCostRepository;
-import pl.kedrabartosz.HomeBudget.service.CategoryService;
-import pl.kedrabartosz.HomeBudget.service.CostService;
+import pl.kedrabartosz.HomeBudget.repository.ListBasedItemRepository;
+import pl.kedrabartosz.HomeBudget.service.ItemService;
+import pl.kedrabartosz.HomeBudget.service.ReceiptService;
 
 @SpringBootApplication
 public class HomeBudgetApplication {
@@ -23,13 +24,13 @@ public class HomeBudgetApplication {
         //System.out.println(costRepository.getAll());
 
         // 1. new
-        CostRepository costRepository = new ListBasedCostRepository(new ArrayList<>());
+        ItemRepository itemRepository = new ListBasedItemRepository(new ArrayList<>());
 
         // 2. builder
-        CostRepository costRepositoryBuilder = ListBasedCostRepository.builder().build();
+        ItemRepository itemRepositoryBuilder = ListBasedItemRepository.builder().build();
 
         // 3. Factory
-        CostRepository costRepositoryFactory = CostRepositoryFactory.createCostRepository();
+        ItemRepository itemRepositoryFactory = ItemRepositoryFactory.createCostRepository();
 
 
         // IoC - Inversion of Control, czyli nie my tworzymy obiekty tylko zlecamy to frameworkpwi
@@ -41,19 +42,22 @@ public class HomeBudgetApplication {
         // aby móc korzystać z costServicu nie możemy go robić (new CostService())!!, tylko
         // pozwalamy Springowi to zrobić i my chcemy tylko się dostać do tego beana, co on stworzył,
         // i na nim operować (ale nie sami go tworzyć)
-        CostService costService = context.getBean(CostService.class);
-        Cost newCost = costService.saveCost("Jewelry", 250.00, Category.builder().build());
-        Cost newCost5 = costService.saveCost("Car", 4000, Category.builder().build());
-        Cost newCost2 = costService.getCost("Jewelry");
+        ItemService itemService = context.getBean(ItemService.class);
 
-        if (costService.doesCostExist("Pencil")) {
+        Person me = new Person("Bartosz");
+
+
+        Item newItem = itemService.saveItem( "Jewelry", 250.00, Category.builder().build());
+        Item newItem5 = itemService.saveItem( "Car", 4000, Category.builder().build());
+
+        if (itemService.doesItemExits("Pencil")) {
             System.out.println(true);
         } else {
             System.out.println(false);
         }
 
-        Cost newCost6 = costService.saveCost("Pencil", 5, Category.builder().build());
-        if (costService.doesCostExist("Pencil")) {
+        Item newItem6 = itemService.saveItem( "Pencil", 5, Category.builder().build());
+        if (itemService.doesItemExits("Pencil")) {
             System.out.println(true);
         } else {
             System.out.println(false);
@@ -65,6 +69,15 @@ public class HomeBudgetApplication {
         System.out.println(buildHome);
         System.out.println(fileBasedCategoryRepository.getAll());
 
+        //shopping cart
+
+        ReceiptService cartService = context.getBean(ReceiptService.class);
+
+
+
+        List<Receipt> all = cartService.getShoppingCarts(me);
+        System.out.println("Number cart for " + me.getName() + ": " + all.size());
+        all.forEach(System.out::println);
 
         // @Autowired, @Service, @Component, @Repository
         // HW:  @RestController, @Bean, @Configuration,

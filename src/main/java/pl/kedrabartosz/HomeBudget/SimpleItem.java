@@ -1,17 +1,19 @@
 package pl.kedrabartosz.HomeBudget;
 
-public class SimpleCost implements Cost {
+public class SimpleItem implements Item {
     private String product;
     private double price;
     private Category category;
 
-    public SimpleCost(String product, double price, Category category) {
+    public SimpleItem(String product,
+                      double price,
+                      Category category
+    ) {
         this.product = product;
         this.price = price;
         this.category = category;
     }
 
-    // Getter i setter dla product!!!!!
     @Override
     public String getProduct() {
         return product;
@@ -28,17 +30,26 @@ public class SimpleCost implements Cost {
     }
 
     @Override
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
+    @Override
     public Category getCategory() {
         return category;
     }
 
     @Override
-    public void setPrice(double price) {
-
+    public void setCategory(Category category) {
+        this.category = category;
     }
+
 
     @Override
     public String toString() {
-        return product + ": " + price + " zł, Category: " + category.getName();
+        return product +
+                ": " + price + " zł, " +
+                "category=" + category.getName();
+
     }
 }
