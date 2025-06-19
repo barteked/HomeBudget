@@ -11,7 +11,7 @@ public interface ItemRepository {
 
     Optional<Item> updateItem(String oldProduct, String newProduct, double newPrice);
 
-    Optional<Item> getItem(String product);
+    Optional<Item> getItemByName(String itemName);
 
     Optional<Item> deleteItem(String product);
 

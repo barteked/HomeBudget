@@ -27,21 +27,21 @@ public class ListBasedItemRepository implements ItemRepository {
 
     @Override
     public Optional<Item> updateItem(String oldProduct, String newProduct, double newPrice) {
-        Optional<Item> existingCostOptional = this.getItem(oldProduct);
+        Optional<Item> existingCostOptional = this.getItemByName(oldProduct);
         existingCostOptional.ifPresent(item -> item.setPrice(newPrice));
         return existingCostOptional;
     }
 
     @Override
-    public Optional<Item> getItem(String product) {
+    public Optional<Item> getItemByName(String itemName) {
         return items.stream()
-                .filter(item -> item.getProduct().equalsIgnoreCase(product))
+                .filter(item -> item.getProduct().equalsIgnoreCase(itemName))
                 .findFirst();
     }
 
     @Override
     public Optional<Item> deleteItem(String product) {
-        Optional<Item> toRemoveOptional = getItem(product);
+        Optional<Item> toRemoveOptional = getItemByName(product);
         if (toRemoveOptional.isEmpty()) {
             return Optional.empty();
         }
