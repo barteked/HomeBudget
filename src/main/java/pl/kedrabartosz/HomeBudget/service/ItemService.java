@@ -26,14 +26,14 @@ public class ItemService {
     public Item updateItem(String oldProduct, String newProduct, double newPrice) {
         Optional<Item> updateItemOptional = listBasedRepository.updateItem(oldProduct, newProduct, newPrice);
         if (updateItemOptional.isEmpty()) {
-            System.out.println("Could not update cost with oldProduct" + oldProduct);
-            throw new IllegalArgumentException("Could not update cost");
+            System.out.println("Could not update item with oldProduct" + oldProduct);
+            throw new IllegalArgumentException("Could not update item");
         }
         return updateItemOptional.get();
     }
 
     public boolean doesItemExits(String product) {
-        Optional<Item> itemOptional = listBasedRepository.getItem(product);
+        Optional<Item> itemOptional = listBasedRepository.getItemByName(product);
         if (itemOptional.isPresent()) {
             return true;
         }
@@ -41,19 +41,19 @@ public class ItemService {
     }
 
     public Item getItem(String product) {
-        Optional<Item> itemOptional = listBasedRepository.getItem(product);
+        Optional<Item> itemOptional = listBasedRepository.getItemByName(product);
         if (itemOptional.isEmpty()) {
-            System.out.println("Could not get Cost with product" + product);
-            throw new IllegalArgumentException("Could not get Cost");
+            System.out.println("Could not get item with product" + product);
+            throw new IllegalArgumentException("Could not get item");
         }
         return itemOptional.get();
     }
 
-    public Item deleteItem(String product) {
-        Optional<Item> deletedItemOptional = listBasedRepository.deleteItem(product);
+    public Item deleteItem(String itemName) {
+        Optional<Item> deletedItemOptional = listBasedRepository.deleteItem(itemName);
         if (deletedItemOptional.isEmpty()) {
-            System.out.println("Could not delete cost with product" + product);
-            throw new IllegalArgumentException("Could not delete cost");
+            System.out.println("Could not delete item with name " + itemName);
+            throw new IllegalArgumentException("Could not delete item");
         }
         return deletedItemOptional.get();
     }
