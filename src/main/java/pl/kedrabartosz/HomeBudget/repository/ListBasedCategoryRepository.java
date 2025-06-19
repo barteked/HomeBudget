@@ -45,7 +45,7 @@ public class ListBasedCategoryRepository implements CategoryRepository {
     @Override
     public Optional<Category> getCategory(String name) {
         return categories.stream()// tworzy strumien z listy category, jest to bezpieczniejsze! niz iterowanie po forze!
-                .filter(c -> c.getName().equalsIgnoreCase(name))// filtruje elementy spelniajace warunek,
+                .filter(category -> category.getName().equalsIgnoreCase(name))// filtruje elementy spelniajace warunek,
                 // equalsIgnoreCase ignoruje czy to duza czy mala litera!, getname() to po prostu taka sama nazwa porownuje!
                 .findFirst();// zwraca pierwszy element pasujacy --> 4. return Optional bo findFirst zwraca Optionala
         // co zwracać gdy nie ma co zwrócić:
