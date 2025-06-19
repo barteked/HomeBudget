@@ -109,7 +109,7 @@ public class FileBasedCategoryRepository implements CategoryRepository {
     public Optional<Category> getCategory(String name) {
         List<Category> categories = getAll();
         return categories.stream()
-                .filter(c -> c.getName().equalsIgnoreCase(name))
+                .filter(category -> category.getName().equalsIgnoreCase(name))
                 .findFirst();
     }
 
@@ -117,7 +117,7 @@ public class FileBasedCategoryRepository implements CategoryRepository {
     public Optional<Category> deleteCategory(String name) {
         List<Category> categories = getAll();
         Optional<Category> categoryToDelete = categories.stream()
-                .filter(c -> c.getName().equalsIgnoreCase(name))
+                .filter(category -> category.getName().equalsIgnoreCase(name))
                 .findFirst();
 
         if (categoryToDelete.isEmpty()) {

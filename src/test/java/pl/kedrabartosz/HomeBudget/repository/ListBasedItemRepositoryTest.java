@@ -3,16 +3,13 @@ package pl.kedrabartosz.HomeBudget.repository;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Cost;
+import pl.kedrabartosz.HomeBudget.Item;
 
 import java.util.ArrayList;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+class ListBasedItemRepositoryTest {
 
-class ListBasedCostRepositoryTest {
-
-    private ListBasedCostRepository listBasedCostRepository = new ListBasedCostRepository(new ArrayList<>());
+    private ListBasedItemRepository listBasedCostRepository = new ListBasedItemRepository(new ArrayList<>());
 
     @Test
     public void shouldAddNewCost() {
@@ -21,7 +18,7 @@ class ListBasedCostRepositoryTest {
         double price = 22;
         Category category = Category.builder().build();
         //When co testujemy 1 max 2 linijki!!
-        Cost actual = listBasedCostRepository.addCost(product, price, category);
+        Item actual = listBasedCostRepository.addItem(product, price, category);
 
         //Then sprawdzam wynik z when!
         Assertions.assertEquals(product, actual.getProduct());
