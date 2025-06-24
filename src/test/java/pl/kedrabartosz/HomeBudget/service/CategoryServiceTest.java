@@ -5,8 +5,9 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.repository.CategoryRepository;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.repository.CategoryRepository;
+import pl.kedrabartosz.HomeBudget.version1.service.CategoryService;
 
 import java.util.List;
 import java.util.Optional;
