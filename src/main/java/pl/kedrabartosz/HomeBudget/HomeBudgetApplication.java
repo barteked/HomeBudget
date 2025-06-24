@@ -6,12 +6,16 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import pl.kedrabartosz.HomeBudget.repository.ItemRepository;
-import pl.kedrabartosz.HomeBudget.repository.ItemRepositoryFactory;
-import pl.kedrabartosz.HomeBudget.repository.FileBasedCategoryRepository;
-import pl.kedrabartosz.HomeBudget.repository.ListBasedItemRepository;
-import pl.kedrabartosz.HomeBudget.service.ItemService;
-import pl.kedrabartosz.HomeBudget.service.ReceiptService;
+import pl.kedrabartosz.HomeBudget.version1.Item;
+import pl.kedrabartosz.HomeBudget.version1.Person;
+import pl.kedrabartosz.HomeBudget.version1.Receipt;
+import pl.kedrabartosz.HomeBudget.version1.repository.ItemRepository;
+import pl.kedrabartosz.HomeBudget.version1.repository.ItemRepositoryFactory;
+import pl.kedrabartosz.HomeBudget.version1.repository.FileBasedCategoryRepository;
+import pl.kedrabartosz.HomeBudget.version1.repository.ListBasedItemRepository;
+import pl.kedrabartosz.HomeBudget.version1.service.ItemService;
+import pl.kedrabartosz.HomeBudget.version1.service.ReceiptService;
+import pl.kedrabartosz.HomeBudget.version1.Category;
 
 @SpringBootApplication
 public class HomeBudgetApplication {

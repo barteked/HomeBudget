@@ -1,8 +1,9 @@
 package pl.kedrabartosz.HomeBudget.repository;
 
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pl.kedrabartosz.HomeBudget.Category;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.repository.CategoryRepository;
+import pl.kedrabartosz.HomeBudget.version1.repository.FileBasedCategoryRepository;
 
 import java.util.List;
 

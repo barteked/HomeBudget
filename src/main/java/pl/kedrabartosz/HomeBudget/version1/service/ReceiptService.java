@@ -1,10 +1,10 @@
-package pl.kedrabartosz.HomeBudget.service;
+package pl.kedrabartosz.HomeBudget.version1.service;
 
 import java.time.Instant;
-import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Item;
-import pl.kedrabartosz.HomeBudget.Person;
-import pl.kedrabartosz.HomeBudget.Receipt;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.Item;
+import pl.kedrabartosz.HomeBudget.version1.Person;
+import pl.kedrabartosz.HomeBudget.version1.Receipt;
 
 import java.util.List;
 import java.util.Optional;

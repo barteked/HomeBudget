@@ -1,7 +1,7 @@
-package pl.kedrabartosz.HomeBudget.repository;
+package pl.kedrabartosz.HomeBudget.version1.repository;
 
-import pl.kedrabartosz.HomeBudget.Person;
-import pl.kedrabartosz.HomeBudget.Receipt;
+import pl.kedrabartosz.HomeBudget.version1.Person;
+import pl.kedrabartosz.HomeBudget.version1.Receipt;
 
 import java.util.List;
 

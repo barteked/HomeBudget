@@ -1,13 +1,13 @@
-package pl.kedrabartosz.HomeBudget.service;
+package pl.kedrabartosz.HomeBudget.version1.service;
 
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Item;
-import pl.kedrabartosz.HomeBudget.repository.ItemRepository;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.Item;
+import pl.kedrabartosz.HomeBudget.version1.repository.ItemRepository;
 
 @Service
 public class ItemService {
