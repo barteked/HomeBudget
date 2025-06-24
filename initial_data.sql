@@ -63,3 +63,24 @@ CREATE TABLE items_in_receipt
     CONSTRAINT fk_iir_receipt
         FOREIGN KEY (receipt_id) REFERENCES receipt (id)
 );
+
+INSERT INTO person
+VALUES (1,'bartosz','andrzejewski','2004-05-04 12:00:00');
+
+INSERT INTO category
+VALUES (1,'food','2004-05-04 12:00:00','2004-05-04 13:20:00');
+
+INSERT INTO quantity
+VALUES (1, '50');
+
+INSERT INTO item
+VALUES (1,'apple',1,1);
+
+INSERT INTO cost
+VALUES (1,2.50,'2004-05-04 22:00:00',1);
+
+INSERT INTO receipt
+VALUES (1,1,'2004-05-04 14:00:00',50);
+
+INSERT INTO items_in_receipt
+VALUES (1,1,1,1);

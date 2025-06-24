@@ -16,12 +16,37 @@ import pl.kedrabartosz.HomeBudget.version1.repository.ListBasedItemRepository;
 import pl.kedrabartosz.HomeBudget.version1.service.ItemService;
 import pl.kedrabartosz.HomeBudget.version1.service.ReceiptService;
 import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version2.repositories.*;
 
 @SpringBootApplication
 public class HomeBudgetApplication {
 
 
     public static void main(String[] args) {
+        ConfigurableApplicationContext context = SpringApplication.run(HomeBudgetApplication.class, args);
+        PersonRepository personRepository = context.getBean(PersonRepository.class);
+        System.out.println(personRepository.findAll());
+
+        CategoryRepository categoryRepository = context.getBean(CategoryRepository.class);
+        System.out.println(categoryRepository.findAll());
+
+        CostRepository costRepository = context.getBean(CostRepository.class);
+        System.out.println(costRepository.findAll());
+
+        pl.kedrabartosz.HomeBudget.version2.repositories.ItemRepository itemRepository = context.getBean(pl.kedrabartosz.HomeBudget.version2.repositories.ItemRepository.class);
+        System.out.println(itemRepository.findAll());
+
+        ItemsInReceiptRepository itemsInReceiptRepository = context.getBean(ItemsInReceiptRepository.class);
+        System.out.println(itemsInReceiptRepository.findAll());
+
+        QuantityRepository quantityRepository = context.getBean(QuantityRepository.class);
+        System.out.println(quantityRepository.findAll());
+
+        ReceiptRepository receiptRepository = context.getBean(ReceiptRepository.class);
+        System.out.println(receiptRepository.findAll());
+    }
+
+    private static void versionOne(String[] args) {
         // SpringApplication.run(HomeBudgetApplication.class, args);
         // CostRepository costRepository = new ListBasedRepository();
         //costRepository.addCost();
@@ -51,8 +76,8 @@ public class HomeBudgetApplication {
         Person me = new Person("Bartosz");
 
 
-        Item newItem = itemService.saveItem( "Jewelry", 250.00, Category.builder().build());
-        Item newItem5 = itemService.saveItem( "Car", 4000, Category.builder().build());
+        Item newItem = itemService.saveItem("Jewelry", 250.00, Category.builder().build());
+        Item newItem5 = itemService.saveItem("Car", 4000, Category.builder().build());
 
         if (itemService.doesItemExits("Pencil")) {
             System.out.println(true);
@@ -60,7 +85,7 @@ public class HomeBudgetApplication {
             System.out.println(false);
         }
 
-        Item newItem6 = itemService.saveItem( "Pencil", 5, Category.builder().build());
+        Item newItem6 = itemService.saveItem("Pencil", 5, Category.builder().build());
         if (itemService.doesItemExits("Pencil")) {
             System.out.println(true);
         } else {
@@ -78,7 +103,6 @@ public class HomeBudgetApplication {
         ReceiptService cartService = context.getBean(ReceiptService.class);
 
 
-
         List<Receipt> all = cartService.getShoppingCarts(me);
         System.out.println("Number cart for " + me.getName() + ": " + all.size());
         all.forEach(System.out::println);
@@ -93,8 +117,6 @@ public class HomeBudgetApplication {
         //@Value - Umożliwia wstrzykiwanie wartości (np. z plików konfiguracyjnych) do pól klasy.
         // @Resource pochodzi od javy a @Autowired od springa
         //Autowired wstrzykuje na podstawie typu a Resource na postawie nazwy
-
-
     }
 }
 // dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobioone)
