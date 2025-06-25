@@ -4,10 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.ToString;
 
 import java.time.Instant;
-@ToString
+
 @Table(name = "cost")
 @Entity
 public class CostEntity {
@@ -18,6 +17,4 @@ public class CostEntity {
     private double price;
     @Column(name = "effective_date")
     private Instant effectiveDate;
-    @Column(name = "item_id")
-    private Integer itemId;
 }

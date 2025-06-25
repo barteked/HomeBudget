@@ -4,11 +4,9 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.ToString;
 
 
 import java.time.Instant;
-@ToString
 @Table(name = "category")
 @Entity
 public class CategoryEntity {
