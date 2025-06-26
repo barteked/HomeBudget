@@ -12,5 +12,5 @@ public class ItemsInReceiptEntity {
     @Column(name = "id")
     private String id;
     @Column(name = "quantity")
-    private Integer quantity;
+    private int quantity;
 }
