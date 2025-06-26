@@ -1,4 +1,4 @@
-package pl.kedrabartosz.HomeBudget.repository;
+package pl.kedrabartosz.HomeBudget.version1.repository;
 
 import java.util.ArrayList;
 

@@ -2,8 +2,9 @@ package pl.kedrabartosz.HomeBudget.repository;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Item;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.Item;
+import pl.kedrabartosz.HomeBudget.version1.repository.ListBasedItemRepository;
 
 import java.util.ArrayList;
 

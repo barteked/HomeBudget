@@ -1,12 +1,12 @@
-package pl.kedrabartosz.HomeBudget.service;
+package pl.kedrabartosz.HomeBudget.version1.service;
 
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Item;
-import pl.kedrabartosz.HomeBudget.Person;
-import pl.kedrabartosz.HomeBudget.Receipt;
-import pl.kedrabartosz.HomeBudget.repository.ReceiptRepository;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.Item;
+import pl.kedrabartosz.HomeBudget.version1.Person;
+import pl.kedrabartosz.HomeBudget.version1.Receipt;
+import pl.kedrabartosz.HomeBudget.version1.repository.ReceiptRepository;
 
 import java.time.Instant;
 import java.util.List;
