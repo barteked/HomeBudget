@@ -6,16 +6,6 @@ import java.util.List;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import pl.kedrabartosz.HomeBudget.version1.Item;
-import pl.kedrabartosz.HomeBudget.version1.Person;
-import pl.kedrabartosz.HomeBudget.version1.Receipt;
-import pl.kedrabartosz.HomeBudget.version1.repository.ItemRepository;
-import pl.kedrabartosz.HomeBudget.version1.repository.ItemRepositoryFactory;
-import pl.kedrabartosz.HomeBudget.version1.repository.FileBasedCategoryRepository;
-import pl.kedrabartosz.HomeBudget.version1.repository.ListBasedItemRepository;
-import pl.kedrabartosz.HomeBudget.version1.service.ItemService;
-import pl.kedrabartosz.HomeBudget.version1.service.ReceiptService;
-import pl.kedrabartosz.HomeBudget.version1.Category;
 import pl.kedrabartosz.HomeBudget.version2.repositories.*;
 
 @SpringBootApplication
@@ -24,6 +14,7 @@ public class HomeBudgetApplication {
 
     public static void main(String[] args) {
         ConfigurableApplicationContext context = SpringApplication.run(HomeBudgetApplication.class, args);
+
         PersonRepository personRepository = context.getBean(PersonRepository.class);
         System.out.println(personRepository.findAll());
 
@@ -33,7 +24,7 @@ public class HomeBudgetApplication {
         CostRepository costRepository = context.getBean(CostRepository.class);
         System.out.println(costRepository.findAll());
 
-        pl.kedrabartosz.HomeBudget.version2.repositories.ItemRepository itemRepository = context.getBean(pl.kedrabartosz.HomeBudget.version2.repositories.ItemRepository.class);
+        ItemRepository itemRepository = context.getBean(pl.kedrabartosz.HomeBudget.version2.repositories.ItemRepository.class);
         System.out.println(itemRepository.findAll());
 
         ItemsInReceiptRepository itemsInReceiptRepository = context.getBean(ItemsInReceiptRepository.class);
@@ -53,13 +44,14 @@ public class HomeBudgetApplication {
         //System.out.println(costRepository.getAll());
 
         // 1. new
-        ItemRepository itemRepository = new ListBasedItemRepository(new ArrayList<>());
+        pl.kedrabartosz.HomeBudget.version1.repository.ItemRepository itemRepository = new pl.kedrabartosz.HomeBudget.version1.repository.ListBasedItemRepository(new ArrayList<>());
 
         // 2. builder
-        ItemRepository itemRepositoryBuilder = ListBasedItemRepository.builder().build();
+        pl.kedrabartosz.HomeBudget.version1.repository.ItemRepository itemRepositoryBuilder = pl.kedrabartosz.HomeBudget.version1.repository.ListBasedItemRepository.builder().build();
 
         // 3. Factory
-        ItemRepository itemRepositoryFactory = ItemRepositoryFactory.createCostRepository();
+
+        pl.kedrabartosz.HomeBudget.version1.repository.ItemRepository itemRepositoryFactory = pl.kedrabartosz.HomeBudget.version1.repository.ItemRepositoryFactory.createCostRepository();
 
 
         // IoC - Inversion of Control, czyli nie my tworzymy obiekty tylko zlecamy to frameworkpwi
@@ -71,13 +63,13 @@ public class HomeBudgetApplication {
         // aby móc korzystać z costServicu nie możemy go robić (new CostService())!!, tylko
         // pozwalamy Springowi to zrobić i my chcemy tylko się dostać do tego beana, co on stworzył,
         // i na nim operować (ale nie sami go tworzyć)
-        ItemService itemService = context.getBean(ItemService.class);
+        pl.kedrabartosz.HomeBudget.version1.service.ItemService itemService = context.getBean(pl.kedrabartosz.HomeBudget.version1.service.ItemService.class);
 
-        Person me = new Person("Bartosz");
+        pl.kedrabartosz.HomeBudget.version1.Person me = new pl.kedrabartosz.HomeBudget.version1.Person("Bartosz");
 
 
-        Item newItem = itemService.saveItem("Jewelry", 250.00, Category.builder().build());
-        Item newItem5 = itemService.saveItem("Car", 4000, Category.builder().build());
+        pl.kedrabartosz.HomeBudget.version1.Item newItem = itemService.saveItem("Jewelry", 250.00, pl.kedrabartosz.HomeBudget.version1.Category.builder().build());
+        pl.kedrabartosz.HomeBudget.version1.Item newItem5 = itemService.saveItem("Car", 4000, pl.kedrabartosz.HomeBudget.version1.Category.builder().build());
 
         if (itemService.doesItemExits("Pencil")) {
             System.out.println(true);
@@ -85,25 +77,25 @@ public class HomeBudgetApplication {
             System.out.println(false);
         }
 
-        Item newItem6 = itemService.saveItem("Pencil", 5, Category.builder().build());
+        pl.kedrabartosz.HomeBudget.version1.Item newItem6 = itemService.saveItem("Pencil", 5, pl.kedrabartosz.HomeBudget.version1.Category.builder().build());
         if (itemService.doesItemExits("Pencil")) {
             System.out.println(true);
         } else {
             System.out.println(false);
         }
 
-        FileBasedCategoryRepository fileBasedCategoryRepository = new FileBasedCategoryRepository();
-        Category buildHome = fileBasedCategoryRepository.save("budowadomu");
-        Category jewelry = fileBasedCategoryRepository.save("jewelery");
+        pl.kedrabartosz.HomeBudget.version1.repository.CategoryRepository fileBasedCategoryRepository = new pl.kedrabartosz.HomeBudget.version1.repository.FileBasedCategoryRepository();
+        pl.kedrabartosz.HomeBudget.version1.Category buildHome = fileBasedCategoryRepository.save("budowadomu");
+        pl.kedrabartosz.HomeBudget.version1.Category jewelry = fileBasedCategoryRepository.save("jewelery");
         System.out.println(buildHome);
         System.out.println(fileBasedCategoryRepository.getAll());
 
         //shopping cart
 
-        ReceiptService cartService = context.getBean(ReceiptService.class);
+        pl.kedrabartosz.HomeBudget.version1.service.ReceiptService cartService = context.getBean(pl.kedrabartosz.HomeBudget.version1.service.ReceiptService.class);
 
 
-        List<Receipt> all = cartService.getShoppingCarts(me);
+        List<pl.kedrabartosz.HomeBudget.version1.Receipt> all = cartService.getShoppingCarts(me);
         System.out.println("Number cart for " + me.getName() + ": " + all.size());
         all.forEach(System.out::println);
 
