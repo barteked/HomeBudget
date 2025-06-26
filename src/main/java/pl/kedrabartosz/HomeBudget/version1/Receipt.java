@@ -1,4 +1,4 @@
-package pl.kedrabartosz.HomeBudget;
+package pl.kedrabartosz.HomeBudget.version1;
 
 import lombok.Getter;
 import lombok.ToString;

@@ -1,11 +1,11 @@
-package pl.kedrabartosz.HomeBudget.repository;
+package pl.kedrabartosz.HomeBudget.version1.repository;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import org.springframework.stereotype.Repository;
-import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.Item;
-import pl.kedrabartosz.HomeBudget.SimpleItem;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.Item;
+import pl.kedrabartosz.HomeBudget.version1.SimpleItem;
 
 import java.util.ArrayList;
 import java.util.List;

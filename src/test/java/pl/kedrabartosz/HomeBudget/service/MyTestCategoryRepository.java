@@ -1,7 +1,7 @@
 package pl.kedrabartosz.HomeBudget.service;
 
-import pl.kedrabartosz.HomeBudget.Category;
-import pl.kedrabartosz.HomeBudget.repository.CategoryRepository;
+import pl.kedrabartosz.HomeBudget.version1.Category;
+import pl.kedrabartosz.HomeBudget.version1.repository.CategoryRepository;
 
 import java.util.List;
 import java.util.Optional;
