@@ -1,9 +1,6 @@
 package pl.kedrabartosz.HomeBudget.version2.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.time.Instant;
 
@@ -17,4 +14,7 @@ public class CostEntity {
     private double price;
     @Column(name = "effective_date")
     private Instant effectiveDate;
+    @ManyToOne
+    @JoinColumn(name = "item_id") // to jest fk
+    private ItemEntity itemEntity;
 }
