@@ -1,13 +1,11 @@
 package pl.kedrabartosz.HomeBudget.version2.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 
 import java.time.Instant;
-
+@Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
