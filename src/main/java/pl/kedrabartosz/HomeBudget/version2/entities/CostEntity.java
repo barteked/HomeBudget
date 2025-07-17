@@ -2,10 +2,8 @@ package pl.kedrabartosz.HomeBudget.version2.entities;
 
 import jakarta.persistence.*;
 import java.util.Objects;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 import java.time.Instant;
 @Setter
@@ -19,6 +17,7 @@ public class CostEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private Integer id;
+    @Getter
     @Column(name = "price")
     private double price;
     @Column(name = "effective_date")
@@ -26,6 +25,8 @@ public class CostEntity {
     @ManyToOne
     @JoinColumn(name = "item_id") // to jest fk
     private ItemEntity itemEntity;
+
+
 
     @Override
     public boolean equals(Object o) {
