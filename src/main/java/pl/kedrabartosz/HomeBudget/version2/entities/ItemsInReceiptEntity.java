@@ -12,7 +12,8 @@ import lombok.NoArgsConstructor;
 @Entity
 public class ItemsInReceiptEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "items_in_receipt_seq")
+    @SequenceGenerator(name = "items_in_receipt_seq", sequenceName = "items_in_receipt_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
     @Column(name = "quantity")

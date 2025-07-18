@@ -84,3 +84,24 @@ VALUES (1, 1, '2004-05-04 14:00:00', 50);
 
 INSERT INTO items_in_receipt
 VALUES (1, 1, 1, 1);
+
+CREATE SEQUENCE category_seq;
+SELECT setval('category_seq',(SELECT MAX(id) FROM category));
+
+CREATE SEQUENCE person_seq;
+SELECT setval('person_seq', (SELECT MAX(id) FROM person));
+
+CREATE SEQUENCE cost_seq;
+SELECT setval('cost_seq', (SELECT MAX(id) FROM cost));
+
+CREATE SEQUENCE item_seq;
+SELECT setval('item_seq', (SELECT MAX(id) FROM item));
+
+CREATE SEQUENCE items_in_receipt_seq;
+SELECT setval('items_in_receipt_seq', (SELECT MAX(id) FROM items_in_receipt));
+
+CREATE SEQUENCE quantity_seq;
+SELECT setval('quantity_seq', (SELECT MAX(id) FROM quantity));
+
+CREATE SEQUENCE receipt_seq;
+SELECT setval('receipt_seq', (SELECT MAX(id) FROM receipt));

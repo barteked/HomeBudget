@@ -2,12 +2,12 @@ package pl.kedrabartosz.HomeBudget.version2.entities;
 
 import jakarta.persistence.*;
 import java.util.Objects;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
+
+import lombok.*;
 
 import java.time.Instant;
-
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -15,7 +15,8 @@ import java.time.Instant;
 @Entity
 public class PersonEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "person_seq")
+    @SequenceGenerator(name = "person_seq", sequenceName = "person_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
     @Column(name = "first_name")

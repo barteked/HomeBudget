@@ -13,7 +13,8 @@ import java.time.Instant;
 @Entity
 public class ReceiptEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "receipt_seq")
+    @SequenceGenerator(name = "receipt_seq", sequenceName = "receipt_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
     @Column(name = "purchased_at")

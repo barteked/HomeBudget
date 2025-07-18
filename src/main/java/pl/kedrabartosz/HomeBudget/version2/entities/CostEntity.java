@@ -14,7 +14,8 @@ import java.time.Instant;
 @Entity
 public class CostEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cost_seq")
+    @SequenceGenerator(name = "cost_seq", sequenceName = "cost_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
     @Getter

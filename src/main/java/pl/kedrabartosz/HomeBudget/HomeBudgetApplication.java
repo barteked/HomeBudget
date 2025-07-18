@@ -1,15 +1,15 @@
 package pl.kedrabartosz.HomeBudget;
 
 import java.time.Instant;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import pl.kedrabartosz.HomeBudget.version2.entities.*;
 import pl.kedrabartosz.HomeBudget.version2.repositories.*;
-import pl.kedrabartosz.HomeBudget.version2.service.ItemService;
+import pl.kedrabartosz.HomeBudget.version2.service.*;
 
 @SpringBootApplication
 public class HomeBudgetApplication {
@@ -92,6 +92,16 @@ public class HomeBudgetApplication {
         ItemsInReceiptRepository itemsInReceiptRepository = context.getBean(ItemsInReceiptRepository.class);
         System.out.println(itemsInReceiptRepository.save(itemsInReceiptToBeSaved));
         System.out.println(itemsInReceiptRepository.findAll());
+
+        ReceiptService receiptService = context.getBean(ReceiptService.class);
+        Map<Integer, Integer> itemsWithQuantities = new HashMap<>();
+        itemsWithQuantities.put(itemToBeSaved.getId(), 2);
+
+        ReceiptEntity savedReceipt = receiptService.saveReceipt(personToBeSaved.getId(), Instant.now(), itemsWithQuantities);
+        System.out.println(savedReceipt);
+        System.out.println(receiptService.getReceiptById(savedReceipt.getId()));
+        System.out.println(receiptService.getReceiptByDate(savedReceipt.getPurchasedAt()));
+        System.out.println(receiptService.getAllReceipts());
 
     }
 
@@ -177,7 +187,7 @@ public class HomeBudgetApplication {
         //Autowired wstrzykuje na podstawie typu a Resource na postawie nazwy
     }*/
 }
-// dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobioone)
+// dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobione)
 // (nazwa jedzenia resturacja czy wyjscia na jedzenie) (zrobione)
 // , wstawic do gh, zapoznac sie z nowym wzorcem projektowym Repozytorium!
 //poczytac pdfa!!

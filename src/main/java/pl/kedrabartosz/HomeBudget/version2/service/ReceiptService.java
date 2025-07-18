@@ -41,7 +41,6 @@ public class ReceiptService {
             int itemId = entry.getKey();
             int quantity = entry.getValue();
 
-            ItemEntity item = itemService.getItem(itemId);
             CostEntity cost = costService.getLatestCostForItem(itemId);
             if (cost == null) {
                 throw new IllegalArgumentException("No cost found for item with ID: " + itemId);

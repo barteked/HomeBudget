@@ -19,7 +19,8 @@ import java.time.Instant;
 @Entity
 public class CategoryEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,generator = "category_seq")
+    @SequenceGenerator(name = "category_seq",sequenceName = "category_seq",allocationSize = 1)
     @Column(name = "id")
     private Integer id;
     @Column(name = "name")

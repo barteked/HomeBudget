@@ -14,7 +14,8 @@ import lombok.*;
 @Entity
 public class ItemEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "item_seq")
+    @SequenceGenerator(name = "item_seq", sequenceName = "item_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
     @Column(name = "name")
