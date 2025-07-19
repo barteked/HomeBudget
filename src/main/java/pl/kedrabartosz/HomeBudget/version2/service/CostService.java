@@ -51,11 +51,11 @@ public class CostService {
     public CostEntity updateCost(int costId, double newPrice, Instant newEffectiveDate, int newItemId) {
         return Optional.of(costRepository.getReferenceById(costId))
                 .map(cost -> {
-                  CostEntity toBeUpdated = cost.toBuilder()
-                      .price(newPrice)
-                      .effectiveDate(newEffectiveDate)
-                      .build();
-                  return costRepository.save(toBeUpdated);
+                    CostEntity toBeUpdated = cost.toBuilder()
+                            .price(newPrice)
+                            .effectiveDate(newEffectiveDate)
+                            .build();
+                    return costRepository.save(toBeUpdated);
                 })
                 .orElseThrow(() -> {
                     System.out.println("Could not update cost with ID: " + costId);
@@ -72,5 +72,10 @@ public class CostService {
 
         costRepository.delete(costToDelete);
         return costToDelete;
+    }
+
+    public CostEntity getLatestCostForItem(int itemId) {
+        return costRepository.findTopByItemEntity_IdOrderByIdDesc(itemId)
+                .orElseThrow(() -> new IllegalArgumentException("No cost found for item ID: " + itemId));
     }
 }

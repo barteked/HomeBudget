@@ -2,10 +2,8 @@ package pl.kedrabartosz.HomeBudget.version2.entities;
 
 import jakarta.persistence.*;
 import java.util.Objects;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import lombok.*;
 
 import java.time.Instant;
 @Setter
@@ -16,9 +14,11 @@ import java.time.Instant;
 @Entity
 public class CostEntity {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "cost_seq")
+    @SequenceGenerator(name = "cost_seq", sequenceName = "cost_seq", allocationSize = 1)
     @Column(name = "id")
     private Integer id;
+    @Getter
     @Column(name = "price")
     private double price;
     @Column(name = "effective_date")
@@ -26,6 +26,8 @@ public class CostEntity {
     @ManyToOne
     @JoinColumn(name = "item_id") // to jest fk
     private ItemEntity itemEntity;
+
+
 
     @Override
     public boolean equals(Object o) {

@@ -9,7 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 import pl.kedrabartosz.HomeBudget.version2.entities.*;
 import pl.kedrabartosz.HomeBudget.version2.repositories.*;
-import pl.kedrabartosz.HomeBudget.version2.service.ItemService;
+import pl.kedrabartosz.HomeBudget.version2.service.*;
 
 @SpringBootApplication
 public class HomeBudgetApplication {
@@ -42,7 +42,7 @@ public class HomeBudgetApplication {
 
         QuantityEntity quantityToBeSaved = QuantityEntity
                 .builder()
-                .value("five")
+                .value("pieces")
                 .build();
 
         QuantityRepository quantityRepository = context.getBean(QuantityRepository.class);
@@ -92,6 +92,17 @@ public class HomeBudgetApplication {
         ItemsInReceiptRepository itemsInReceiptRepository = context.getBean(ItemsInReceiptRepository.class);
         System.out.println(itemsInReceiptRepository.save(itemsInReceiptToBeSaved));
         System.out.println(itemsInReceiptRepository.findAll());
+
+        ReceiptService receiptService = context.getBean(ReceiptService.class);
+        List<ItemEntity> items = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            items.add(itemToBeSaved);
+        }
+        ReceiptEntity savedReceipt = receiptService.saveReceipt(personToBeSaved.getId(), Instant.now(), items);
+        System.out.println(savedReceipt);
+        System.out.println(receiptService.getReceiptById(savedReceipt.getId()));
+        System.out.println(receiptService.getReceiptByDate(savedReceipt.getPurchasedAt()));
+        System.out.println(receiptService.getAllReceipts());
 
     }
 
@@ -177,7 +188,7 @@ public class HomeBudgetApplication {
         //Autowired wstrzykuje na podstawie typu a Resource na postawie nazwy
     }*/
 }
-// dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobioone)
+// dokonczyc to implemetnowac interfejs Food i tez klasy gdzie beda implementowane te rzeczy! (zrobione)
 // (nazwa jedzenia resturacja czy wyjscia na jedzenie) (zrobione)
 // , wstawic do gh, zapoznac sie z nowym wzorcem projektowym Repozytorium!
 //poczytac pdfa!!

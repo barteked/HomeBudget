@@ -4,9 +4,10 @@ import java.time.Instant;
 import java.util.Optional;
 
 import lombok.AllArgsConstructor;
+import org.springframework.stereotype.Service;
 import pl.kedrabartosz.HomeBudget.version2.entities.PersonEntity;
 import pl.kedrabartosz.HomeBudget.version2.repositories.PersonRepository;
-
+@Service
 @AllArgsConstructor
 public class PersonService {
     private PersonRepository personRepository;
