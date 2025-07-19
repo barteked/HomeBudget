@@ -34,16 +34,20 @@ public class ReceiptService {
         this.itemsInReceiptRepository = itemsInReceiptRepository;
     }
 
-    public ReceiptEntity saveReceipt(int personId, Instant purchasedAt, Map<Integer, Integer> itemsWithQuantities) {
-        double totalCost = 0.0;
+    public ReceiptEntity saveReceipt(int personId, Instant purchasedAt, List<ItemEntity> items) {
+        Map<ItemEntity, Integer> itemCountMap = new java.util.HashMap<>();
+        for (ItemEntity item : items) {
+            itemCountMap.put(item, itemCountMap.getOrDefault(item, 0) + 1);
+        }
 
-        for (Map.Entry<Integer, Integer> entry : itemsWithQuantities.entrySet()) {
-            int itemId = entry.getKey();
+        double totalCost = 0.0;
+        for (Map.Entry<ItemEntity, Integer> entry : itemCountMap.entrySet()) {
+            ItemEntity item = entry.getKey();
             int quantity = entry.getValue();
 
-            CostEntity cost = costService.getLatestCostForItem(itemId);
+            CostEntity cost = costService.getLatestCostForItem(item.getId());
             if (cost == null) {
-                throw new IllegalArgumentException("No cost found for item with ID: " + itemId);
+                throw new IllegalArgumentException("No cost found for item with ID: " + item.getId());
             }
             totalCost += cost.getPrice() * quantity;
         }
@@ -56,16 +60,12 @@ public class ReceiptService {
 
         ReceiptEntity savedReceipt = receiptRepository.save(receipt);
 
-        for (Map.Entry<Integer, Integer> entry : itemsWithQuantities.entrySet()) {
-            ItemEntity item = itemService.getItem(entry.getKey());
-            int quantity = entry.getValue();
-
+        for (Map.Entry<ItemEntity, Integer> entry : itemCountMap.entrySet()) {
             ItemsInReceiptEntity link = ItemsInReceiptEntity.builder()
-                    .itemEntity(item)
+                    .itemEntity(entry.getKey())
                     .receiptEntity(savedReceipt)
-                    .quantity(quantity)
+                    .quantity(entry.getValue())
                     .build();
-
             itemsInReceiptRepository.save(link);
         }
 

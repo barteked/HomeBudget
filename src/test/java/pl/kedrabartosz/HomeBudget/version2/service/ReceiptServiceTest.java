@@ -42,14 +42,14 @@ class ReceiptServiceTest {
         // given
         int personId = 1;
         Instant date = Instant.now();
-        Map<Integer, Integer> items = Map.of(10, 2);
 
         PersonEntity person = PersonEntity.builder().id(personId).build();
         ItemEntity item = ItemEntity.builder().id(10).build();
         CostEntity cost = CostEntity.builder().price(5.0).build();
 
+        List<ItemEntity> items = List.of(item, item);
+
         when(personService.getById(personId)).thenReturn(person);
-        when(itemService.getItem(10)).thenReturn(item);
         when(costService.getLatestCostForItem(10)).thenReturn(cost);
         when(receiptRepository.save(any())).thenAnswer(i -> i.getArguments()[0]);
 
@@ -111,12 +111,12 @@ class ReceiptServiceTest {
         // given
         int personId = 1;
         Instant date = Instant.now();
-        Map<Integer, Integer> items = Map.of(10, 1);
 
         ItemEntity item = ItemEntity.builder().id(10).build();
 
+        List<ItemEntity> items = List.of(item);
+
         when(personService.getById(personId)).thenReturn(PersonEntity.builder().id(personId).build());
-        when(itemService.getItem(10)).thenReturn(item);
         when(costService.getLatestCostForItem(10)).thenReturn(null);
 
         // when & then

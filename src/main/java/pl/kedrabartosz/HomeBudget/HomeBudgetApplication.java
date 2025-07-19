@@ -1,8 +1,8 @@
 package pl.kedrabartosz.HomeBudget;
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -42,7 +42,7 @@ public class HomeBudgetApplication {
 
         QuantityEntity quantityToBeSaved = QuantityEntity
                 .builder()
-                .value("five")
+                .value("pieces")
                 .build();
 
         QuantityRepository quantityRepository = context.getBean(QuantityRepository.class);
@@ -94,31 +94,16 @@ public class HomeBudgetApplication {
         System.out.println(itemsInReceiptRepository.findAll());
 
         ReceiptService receiptService = context.getBean(ReceiptService.class);
-        Map<Integer, Integer> itemsWithQuantities = new HashMap<>();
-        String quantityString = itemToBeSaved.getQuantityEntity().getValue();
-        int quantityValue = mapQuantityToInteger(quantityString);
-        itemsWithQuantities.put(itemToBeSaved.getId(), quantityValue);
-        ReceiptEntity savedReceipt = receiptService.saveReceipt(personToBeSaved.getId(), Instant.now(), itemsWithQuantities);
+        List<ItemEntity> items = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            items.add(itemToBeSaved);
+        }
+        ReceiptEntity savedReceipt = receiptService.saveReceipt(personToBeSaved.getId(), Instant.now(), items);
         System.out.println(savedReceipt);
         System.out.println(receiptService.getReceiptById(savedReceipt.getId()));
         System.out.println(receiptService.getReceiptByDate(savedReceipt.getPurchasedAt()));
         System.out.println(receiptService.getAllReceipts());
 
-    }
-
-    private static int mapQuantityToInteger(String value) {
-        return switch (value.toLowerCase()) {
-            case "one" -> 1;
-            case "two" -> 2;
-            case "three" -> 3;
-            case "four" -> 4;
-            case "five" -> 5;
-            case "six" -> 6;
-            case "seven" -> 7;
-            case "eight" -> 8;
-            case "nine" -> 9;
-            default -> throw new IllegalArgumentException("Unsupported quantity value: " + value);
-        };
     }
 
    /* private static void versionOne(String[] args) {
